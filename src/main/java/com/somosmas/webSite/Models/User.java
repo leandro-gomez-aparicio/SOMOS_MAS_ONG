@@ -2,10 +2,22 @@ package com.somosmas.webSite.Models;
 
 import com.sun.istack.NotNull;
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "user")
+@SQLDelete(sql = "UPDATE table_product SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class User implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -33,6 +45,13 @@ public class User implements Serializable{
     
     @Column
     private String photo;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date timeStamp;
+    
+    @Column
+    private boolean softDelete = Boolean.FALSE;
 
     public Long getIdUser() {
         return idUser;
@@ -80,6 +99,22 @@ public class User implements Serializable{
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public boolean isSoftDelete() {
+        return softDelete;
+    }
+
+    public void setSoftDelete(boolean softDelete) {
+        this.softDelete = softDelete;
     }
     
 }
