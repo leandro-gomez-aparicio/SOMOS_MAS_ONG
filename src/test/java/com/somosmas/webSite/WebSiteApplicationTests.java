@@ -1,10 +1,10 @@
-package com.somosmas.alkemy;
+package com.somosmas.webSite;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AlkemyApplicationTests {
+class WebSiteApplicationTests {
 
 	@Test
 	void contextLoads() {
