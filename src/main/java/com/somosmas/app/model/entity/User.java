@@ -1,6 +1,5 @@
 package com.somosmas.app.model.entity;
 
-import com.sun.istack.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
 
 @Entity
 @Table(name = "user")
@@ -27,20 +27,16 @@ public class User implements Serializable{
     @Column(unique = true)
     private Long idUser;
 
-    @NotNull
-    @Column
+    @Column(nullable = false )
     private String firstName;
 
-    @NotNull
-    @Column
+    @Column(nullable = false)
     private String lastName;
 
-    @NotNull
-    @Column( unique = true)
+    @Column( unique = true, nullable = false)
     private String email;
 
-    @NotNull
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @Column
@@ -53,6 +49,16 @@ public class User implements Serializable{
     @Column
     private boolean softDelete = Boolean.FALSE;
 
+    public User(Long idUser, String firstName, String lastName, String email, String password, String photo, Date timeStamp) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.photo = photo;
+        this.timeStamp = timeStamp;
+    }
+    
     public Long getIdUser() {
         return idUser;
     }
