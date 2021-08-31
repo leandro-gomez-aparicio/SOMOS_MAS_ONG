@@ -1,6 +1,7 @@
 package com.somosmas.app.model.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,46 +11,41 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
 
 @Entity
 @Table(name = "user")
-@SQLDelete(sql = "UPDATE table_product SET deleted = true WHERE id=?")
-@Where(clause = "deleted=false")
 public class User implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true)
+    @Column(unique = true, name  = "id_user")
     private Long idUser;
 
-    @Column(nullable = false )
+    @Column(nullable = false, name = "first_name")
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "last_name")
     private String lastName;
 
-    @Column( unique = true, nullable = false)
+    @Column( unique = true, nullable = false, name = "email")
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "password")
     private String password;
 
-    @Column
+    @Column(name = "photo")
     private String photo;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column
-    private Date timeStamp;
+    @Column(name = "time_stamp")
+    private Timestamp timeStamp;
 
-    @Column
-    private boolean softDelete = Boolean.FALSE;
+    @Column(name = "soft_delete")
+    private boolean softDelete;
 
-    public User(Long idUser, String firstName, String lastName, String email, String password, String photo, Date timeStamp) {
+    public User(Long idUser, String firstName, String lastName, String email, String password, String photo, Timestamp timeStamp) {
         this.idUser = idUser;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -111,7 +107,7 @@ public class User implements Serializable{
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(Timestamp timeStamp) {
         this.timeStamp = timeStamp;
     }
 
