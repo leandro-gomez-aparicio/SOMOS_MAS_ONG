@@ -1,10 +1,10 @@
-package com.somosmas.webSite;
+package com.somosmas.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WebSiteApplicationTests {
+class SomosMasApplicationTests {
 
 	@Test
 	void contextLoads() {
