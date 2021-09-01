@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.somosmas.app.model.entity.Organization;
 
 @Repository
-public interface OrganizationRepository extends JpaRepository<Organization, Long> {
+public interface IOrganizationRepository extends JpaRepository<Organization, Long> {
 
 }
