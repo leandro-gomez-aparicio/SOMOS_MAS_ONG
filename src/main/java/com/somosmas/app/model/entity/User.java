@@ -2,20 +2,16 @@ package com.somosmas.app.model.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -38,7 +34,6 @@ public class User implements Serializable {
     @Column(name = "photo")
     private String photo;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timestamp")
     private Timestamp timestamp;
 
@@ -54,7 +49,7 @@ public class User implements Serializable {
         this.photo = photo;
         this.timestamp = timestamp;
     }
-
+    
     public Long getIdUser() {
         return idUser;
     }
@@ -102,8 +97,7 @@ public class User implements Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
-    public Date getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
@@ -118,5 +112,4 @@ public class User implements Serializable {
     public void setSoftDelete(boolean softDelete) {
         this.softDelete = softDelete;
     }
-
 }
