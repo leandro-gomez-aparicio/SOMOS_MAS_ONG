@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -38,7 +39,7 @@ public class User implements Serializable {
     private Timestamp timestamp;
 
     @Column(name = "soft_delete")
-    private boolean softDelete;
+    private Boolean softDelete;
 
     public User(Long idUser, String firstName, String lastName, String email, String password, String photo, Timestamp timestamp) {
         this.idUser = idUser;
@@ -49,7 +50,7 @@ public class User implements Serializable {
         this.photo = photo;
         this.timestamp = timestamp;
     }
-    
+
     public Long getIdUser() {
         return idUser;
     }
@@ -97,6 +98,7 @@ public class User implements Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -105,11 +107,11 @@ public class User implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public boolean isSoftDelete() {
+    public Boolean isSoftDelete() {
         return softDelete;
     }
 
-    public void setSoftDelete(boolean softDelete) {
+    public void setSoftDelete(Boolean softDelete) {
         this.softDelete = softDelete;
     }
 }

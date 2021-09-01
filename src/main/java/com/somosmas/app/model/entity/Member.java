@@ -13,25 +13,35 @@ import java.util.Objects;
 @Entity
 @Table(name = "member")
 public class Member implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_member")
     private Long idMember;
+
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "facebook_url")
     private String facebookUrl;
+
     @Column(name = "instagram_url")
     private String instagramUrl;
+
     @Column(name = "linkedin_url")
     private String linkedinUrl;
+
     @Column(name = "image", nullable = false)
     private String image;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "timestamp")
     private Timestamp timestamp;
+
     @Column(name = "soft_delete")
     private Boolean softDelete;
 

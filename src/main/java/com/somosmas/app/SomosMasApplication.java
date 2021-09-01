@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableAutoConfiguration
 public class SomosMasApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SomosMasApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SomosMasApplication.class, args);
+    }
 
 }

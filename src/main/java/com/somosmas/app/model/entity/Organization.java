@@ -1,115 +1,115 @@
 package com.somosmas.app.model.entity;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "organization")
 public class Organization {
 
-	@Column(name = "name", nullable = false, unique = true)
-	private String name;
+	private static final long serialVersionUID = 1L;
 
-	@Column(name = "image", nullable = false)
-	private String image;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
-	@Column(name = "address")
-	private String address;
+    @Column(name = "image", nullable = false)
+    private String image;
 
-	@Column(name = "phone")
-	private Integer phone;
+    @Column(name = "address")
+    private String address;
 
-	@Column(name = "email", nullable = false)
-	private String email;
+    @Column(name = "phone")
+    private Integer phone;
 
-	@Column(name = "welcome_text", nullable = false)
-	private String welcomeText;
+    @Column(name = "email", nullable = false)
+    private String email;
 
-	@Column(name = "about_us_text")
-	private String aboutUsText;
+    @Column(name = "welcome_text", nullable = false)
+    private String welcomeText;
 
-	@Column(name = "timestamp")
-	private Timestamp timestamp;
+    @Column(name = "about_us_text")
+    private String aboutUsText;
 
-	@Column(name = "soft_delete")
-	private Boolean softDelete;
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
+
+    @Column(name = "soft_delete")
+    private Boolean softDelete;
 
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public Integer getPhone() {
-		return phone;
-	}
+    public Integer getPhone() {
+        return phone;
+    }
 
-	public void setPhone(Integer phone) {
-		this.phone = phone;
-	}
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getWelcomeText() {
-		return welcomeText;
-	}
+    public String getWelcomeText() {
+        return welcomeText;
+    }
 
-	public void setWelcomeText(String welcomeText) {
-		this.welcomeText = welcomeText;
-	}
+    public void setWelcomeText(String welcomeText) {
+        this.welcomeText = welcomeText;
+    }
 
-	public String getAboutUsText() {
-		return aboutUsText;
-	}
+    public String getAboutUsText() {
+        return aboutUsText;
+    }
 
-	public void setAboutUsText(String aboutUsText) {
-		this.aboutUsText = aboutUsText;
-	}
+    public void setAboutUsText(String aboutUsText) {
+        this.aboutUsText = aboutUsText;
+    }
 
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
 
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
 
-	public Boolean getSoftDelete() {
-		return softDelete;
-	}
+    public Boolean getSoftDelete() {
+        return softDelete;
+    }
 
-	public void setSoftDelete(Boolean softDelete) {
-		this.softDelete = softDelete;
-	}
+    public void setSoftDelete(Boolean softDelete) {
+        this.softDelete = softDelete;
+    }
 
 
 }

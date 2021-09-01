@@ -84,7 +84,7 @@ local.properties
 
 # Generated files
 .idea/**/contentModel.xml
-.idea/**/
+.idea
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -148,10 +148,10 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
@@ -219,5 +219,11 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+### Mac ###
+.DS_Store
+
+### Visual Code ###
+.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,maven,java,eclipse
