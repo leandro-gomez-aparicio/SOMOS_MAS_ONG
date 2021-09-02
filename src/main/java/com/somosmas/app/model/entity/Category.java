@@ -7,51 +7,50 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "news")
-public class News implements Serializable {
+@Table(name = "category")
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_news")
-    private Long idNews;
+    @Column(name = "id_category")
+    private Long idCategory;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "image", nullable = false)
     private String image;
 
     @Column(name = "timestamp")
-    private Timestamp timestamp;
+    private Date timeStamp;
 
     @Column(name = "soft_delete")
     private Boolean softDelete;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_category")
-    private Category category;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<News> news;
 
-    public News() {
+    public Category() {
     }
 
-    public Long getIdNews() {
-        return idNews;
+    public Long getIdCategory() {
+        return idCategory;
     }
 
-    public void setIdNews(Long idNews) {
-        this.idNews = idNews;
+    public void setIdCategory(Long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getName() {
@@ -62,12 +61,12 @@ public class News implements Serializable {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImage() {
@@ -78,12 +77,12 @@ public class News implements Serializable {
         this.image = image;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public Boolean isSoftDelete() {
@@ -94,11 +93,11 @@ public class News implements Serializable {
         this.softDelete = softDelete;
     }
 
-    public Category getCategory() {
-        return category;
+    public List<News> getNews() {
+        return news;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setNews(List<News> news) {
+        this.news = news;
     }
 }
