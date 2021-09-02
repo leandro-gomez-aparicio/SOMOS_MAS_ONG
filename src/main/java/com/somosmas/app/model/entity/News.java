@@ -17,7 +17,8 @@ public class News implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_news")
+    private Long idNews;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -34,7 +35,7 @@ public class News implements Serializable {
     @Column(name = "soft_delete")
     private Boolean softDelete;
 
-    //TODO Falta agregar el foreingkey a categoryId
+    //TODO Falta agregar el foreing key a categoryId
 
     public News(String name, String content, String image, Timestamp timestamp, Boolean softDelete) {
         this.name = name;
@@ -42,6 +43,14 @@ public class News implements Serializable {
         this.image = image;
         this.timestamp = timestamp;
         this.softDelete = softDelete;
+    }
+
+    public Long getIdNews() {
+        return idNews;
+    }
+
+    public void setIdNews(Long idNews) {
+        this.idNews = idNews;
     }
 
     public String getName() {
@@ -68,7 +77,7 @@ public class News implements Serializable {
         this.image = image;
     }
 
-    public Timestamp getTimeStamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
