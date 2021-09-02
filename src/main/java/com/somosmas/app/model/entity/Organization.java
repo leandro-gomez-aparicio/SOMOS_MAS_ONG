@@ -2,14 +2,23 @@ package com.somosmas.app.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "organization")
-public class Organization {
+public class Organization implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_organization")
+    private Long idOrganization;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -38,6 +47,16 @@ public class Organization {
     @Column(name = "soft_delete")
     private Boolean softDelete;
 
+    public Organization() {
+    }
+
+    public Long getIdOrganization() {
+        return idOrganization;
+    }
+
+    public void setIdOrganization(Long idOrganization) {
+        this.idOrganization = idOrganization;
+    }
 
     public String getName() {
         return name;
@@ -110,6 +129,5 @@ public class Organization {
     public void setSoftDelete(Boolean softDelete) {
         this.softDelete = softDelete;
     }
-
 
 }

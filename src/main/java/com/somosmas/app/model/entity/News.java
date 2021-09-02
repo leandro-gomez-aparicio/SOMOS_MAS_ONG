@@ -37,12 +37,7 @@ public class News implements Serializable {
 
     //TODO Falta agregar el foreing key a categoryId
 
-    public News(String name, String content, String image, Timestamp timestamp, Boolean softDelete) {
-        this.name = name;
-        this.content = content;
-        this.image = image;
-        this.timestamp = timestamp;
-        this.softDelete = softDelete;
+    public News() {
     }
 
     public Long getIdNews() {

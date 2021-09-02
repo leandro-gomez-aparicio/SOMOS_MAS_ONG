@@ -1,13 +1,13 @@
 package com.somosmas.app.model.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user")
@@ -41,14 +41,7 @@ public class User implements Serializable {
     @Column(name = "soft_delete")
     private Boolean softDelete;
 
-    public User(Long idUser, String firstName, String lastName, String email, String password, String photo, Timestamp timestamp) {
-        this.idUser = idUser;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.photo = photo;
-        this.timestamp = timestamp;
+    public User() {
     }
 
     public Long getIdUser() {
