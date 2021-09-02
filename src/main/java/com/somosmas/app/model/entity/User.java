@@ -1,13 +1,17 @@
 package com.somosmas.app.model.entity;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user")
@@ -40,6 +44,10 @@ public class User implements Serializable {
 
     @Column(name = "soft_delete")
     private Boolean softDelete;
+
+    @JoinColumn(name = "id_role")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private Role role;
 
     public User() {
     }
@@ -106,5 +114,13 @@ public class User implements Serializable {
 
     public void setSoftDelete(Boolean softDelete) {
         this.softDelete = softDelete;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
