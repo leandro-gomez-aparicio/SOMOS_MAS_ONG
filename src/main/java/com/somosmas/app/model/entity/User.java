@@ -1,5 +1,7 @@
 package com.somosmas.app.model.entity;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.CascadeType;
@@ -122,5 +124,8 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+    public Boolean isSameUser(String encodedPassword){
+        return BCrypt.checkpw(this.password,encodedPassword);
     }
 }
