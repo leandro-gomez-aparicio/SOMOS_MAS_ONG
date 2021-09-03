@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class AuthenticationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Autowired
     ILoginService loginService;
@@ -26,7 +26,7 @@ public class LoginController {
     @PostMapping(value = "/login",
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         try{
             return ResponseEntity.ok(loginService.authentication(loginRequest));
         }catch (AuthenticationDeniedException e){
