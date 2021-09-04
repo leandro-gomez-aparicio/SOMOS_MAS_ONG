@@ -125,7 +125,7 @@ public class User implements Serializable {
     public void setRole(Role role) {
         this.role = role;
     }
-    public Boolean isSameUser(String encodedPassword){
-        return BCrypt.checkpw(this.password,encodedPassword);
+    public Boolean isSameUser(String plainPassword){
+        return BCrypt.checkpw(plainPassword,this.password);
     }
 }
