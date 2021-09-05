@@ -1,4 +1,4 @@
-package com.somosmas.app.util.mail;
+package com.somosmas.app.util.mail.template;
 
 import java.io.Serializable;
 
