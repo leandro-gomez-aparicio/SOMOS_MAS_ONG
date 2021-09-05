@@ -5,6 +5,7 @@
 - The interfaces should start with prefix "I". Example: IUserRepository.
 - The names of the attributes for Java code use camel case, but the name for SQL use underscore.
 - The name of the tables should be in singular.
+- Exceptions should be handled by ErrorHandler class.
 
 ### KEEP IN MIND FOR PULL REQUEST AND CODE REVIEW
 

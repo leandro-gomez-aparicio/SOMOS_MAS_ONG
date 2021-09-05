@@ -2,8 +2,6 @@ package com.somosmas.app.model.entity;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user")
@@ -52,6 +52,7 @@ public class User implements Serializable {
     private Role role;
 
     public User() {
+
     }
 
     public Long getIdUser() {
@@ -125,7 +126,8 @@ public class User implements Serializable {
     public void setRole(Role role) {
         this.role = role;
     }
-    public Boolean isSameUser(String plainPassword){
-        return BCrypt.checkpw(plainPassword,this.password);
+
+    public Boolean isSameUser(String plainPassword) {
+        return BCrypt.checkpw(plainPassword, this.password);
     }
 }
