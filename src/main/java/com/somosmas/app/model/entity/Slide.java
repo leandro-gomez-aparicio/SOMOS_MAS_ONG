@@ -25,8 +25,8 @@ public class Slide implements Serializable {
     @Column(nullable = false, name = "text")
     private String text;
 
-    @Column(name = "order")
-    private Integer order;
+    @Column(name = "slide_order")
+    private Integer slideOrder;
 
     @Column(name = "organization_id")
     private Long organizationId;
@@ -58,12 +58,12 @@ public class Slide implements Serializable {
         this.text = text;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getSlideOrder() {
+        return slideOrder;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setSlideOrder(Integer slideOrder) {
+        this.slideOrder = slideOrder;
     }
 
     public Long getOrganizationId() {
