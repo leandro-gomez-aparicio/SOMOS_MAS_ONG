@@ -3,6 +3,7 @@ package com.somosmas.app.service;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
+import com.somosmas.app.service.abstraction.IOrganizationService;
 import com.somosmas.app.util.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

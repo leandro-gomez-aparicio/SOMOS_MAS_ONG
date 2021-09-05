@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.somosmas.app.service.IUserService;
+import com.somosmas.app.service.abstraction.IUserService;
 
 @RestController
 @RequestMapping("/users")

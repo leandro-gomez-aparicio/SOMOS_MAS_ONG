@@ -1,11 +1,12 @@
 package com.somosmas.app.service;
 
-import com.somosmas.app.exception.AuthenticationDeniedException;
-import com.somosmas.app.exception.ConstraintViolationException;
+import com.somosmas.app.exception.custom.AuthenticationDeniedException;
+import com.somosmas.app.exception.custom.ConstraintViolationException;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.LoginRequest;
 import com.somosmas.app.model.response.LoginResponse;
 import com.somosmas.app.repository.IUserRepository;
+import com.somosmas.app.service.abstraction.ILoginService;
 import com.somosmas.app.util.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

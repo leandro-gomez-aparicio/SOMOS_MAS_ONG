@@ -1,4 +1,4 @@
-package com.somosmas.app.exception;
+package com.somosmas.app.exception.custom;
 
 public class SendEmailException extends Exception {
 

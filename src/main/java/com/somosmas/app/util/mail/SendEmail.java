@@ -7,7 +7,7 @@ import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
-import com.somosmas.app.exception.SendEmailException;
+import com.somosmas.app.exception.custom.SendEmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

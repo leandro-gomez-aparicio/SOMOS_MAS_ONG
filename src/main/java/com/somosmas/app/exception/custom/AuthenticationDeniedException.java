@@ -1,10 +1,11 @@
-package com.somosmas.app.exception;
+package com.somosmas.app.exception.custom;
 
 public class AuthenticationDeniedException extends Exception {
-    private static final String ERROR_MESSAGE = "Invalid credentials";
+
+    private static final String ERROR_MESSAGE = "Invalid credentials.";
+
     public AuthenticationDeniedException() {
         super(ERROR_MESSAGE);
     }
-
 
 }

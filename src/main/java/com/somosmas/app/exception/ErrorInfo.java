@@ -3,6 +3,7 @@ package com.somosmas.app.exception;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorInfo {
+
 	@JsonProperty("message")
 	private String message;
 	@JsonProperty("status_code")

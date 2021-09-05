@@ -2,6 +2,7 @@ package com.somosmas.app.service;
 
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.repository.IUserRepository;
+import com.somosmas.app.service.abstraction.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

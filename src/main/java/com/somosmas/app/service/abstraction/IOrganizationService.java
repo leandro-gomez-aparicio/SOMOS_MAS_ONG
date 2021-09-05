@@ -1,4 +1,4 @@
-package com.somosmas.app.service;
+package com.somosmas.app.service.abstraction;
 
 import com.somosmas.app.model.response.OrganizationResponse;
 
