@@ -33,7 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/auth/**").permitAll();
+                .authorizeRequests()
+                .antMatchers("/auth/**").permitAll();
+                //TODO uncomment when OT72-33 is implemented
+                //.antMatchers("/users").hasRole(RoleType.ROLE_ADMIN.getDescription());
     }
 
     @Bean

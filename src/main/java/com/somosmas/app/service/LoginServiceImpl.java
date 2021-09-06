@@ -4,7 +4,7 @@ import com.somosmas.app.exception.custom.AuthenticationDeniedException;
 import com.somosmas.app.exception.custom.ConstraintViolationException;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.LoginRequest;
-import com.somosmas.app.model.response.LoginResponse;
+import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.ILoginService;
 import com.somosmas.app.util.ConvertUtil;
@@ -30,7 +30,7 @@ public class LoginServiceImpl implements ILoginService {
     }
 
     @Override
-    public LoginResponse authentication(LoginRequest loginRequest) throws AuthenticationDeniedException, ConstraintViolationException {
+    public UserDetailsResponse authentication(LoginRequest loginRequest) throws AuthenticationDeniedException, ConstraintViolationException {
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
         validate(loginRequest);
         if (userOptional.isPresent()

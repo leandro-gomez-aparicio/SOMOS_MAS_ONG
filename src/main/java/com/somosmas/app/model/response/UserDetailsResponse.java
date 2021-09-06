@@ -1,12 +1,12 @@
 package com.somosmas.app.model.response;
 
-public class LoginResponse {
+public class UserDetailsResponse {
     private String email;
     private String firstName;
     private String lastName;
     private String photo;
 
-    public LoginResponse() {
+    public UserDetailsResponse() {
     }
 
     public String getFirstName() {

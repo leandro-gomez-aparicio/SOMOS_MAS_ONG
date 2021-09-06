@@ -6,6 +6,7 @@ import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.RegisterUserRequest;
 import com.somosmas.app.model.response.RegisterUserResponse;
 import com.somosmas.app.repository.IRoleRepository;
+import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.IUserService;
 import com.somosmas.app.util.ConvertUtil;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.time.Instant;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -84,4 +86,9 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         }
         return (UserDetails) user.get();
     }
+    @Override
+    public List<UserDetailsResponse> listActiveUsers() {
+        return ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse(),UserDetailsResponse.class);
+    }
+
 }
