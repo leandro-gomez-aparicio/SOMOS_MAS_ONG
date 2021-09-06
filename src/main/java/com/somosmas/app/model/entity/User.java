@@ -1,5 +1,8 @@
 package com.somosmas.app.model.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.CascadeType;
@@ -14,10 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -129,5 +135,37 @@ public class User implements Serializable {
 
     public Boolean isSameUser(String plainPassword) {
         return BCrypt.checkpw(plainPassword, this.password);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority(role.getName()));
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return !softDelete;
     }
 }

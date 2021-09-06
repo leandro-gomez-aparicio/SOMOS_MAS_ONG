@@ -17,6 +17,13 @@ public class ErrorHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
+    @ExceptionHandler(value = UserAlreadyExistException.class)
+    public ResponseEntity<Object> userAlreadyExistException(HttpServletRequest request, UserAlreadyExistException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(exception.getMessage(), HttpStatus.BAD_REQUEST.value(), request.getRequestURI());
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(value = NoSuchElementException.class)
     public ResponseEntity<Object> dataAccessException(HttpServletRequest request, NoSuchElementException exception) {
         // return error info object with standard json
