@@ -5,6 +5,7 @@ public class UserDetailsResponse {
     private String firstName;
     private String lastName;
     private String photo;
+    private String token;
 
     public UserDetailsResponse() {
     }
@@ -40,4 +41,13 @@ public class UserDetailsResponse {
     public void setEmail(String email) {
         this.email = email;
     }
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 }

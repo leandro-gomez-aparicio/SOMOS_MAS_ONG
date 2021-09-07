@@ -8,6 +8,8 @@ import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.ILoginService;
 import com.somosmas.app.util.ConvertUtil;
+import com.somosmas.app.util.jwt.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class LoginServiceImpl implements ILoginService {
 
     @Autowired
     IUserRepository userRepository;
+    @Autowired
+    JwtUtil jwtUtil;
 
     private final Validator validator;
 
@@ -35,7 +39,9 @@ public class LoginServiceImpl implements ILoginService {
         validate(loginRequest);
         if (userOptional.isPresent()
                 && (userOptional.get().isSameUser(loginRequest.getPassword()))) {
-            return ConvertUtil.convertToDto(userOptional.get());
+        	UserDetailsResponse loginResponse = ConvertUtil.convertToDto(userOptional.get());
+        	loginResponse.setToken(jwtUtil.generateToken(loginResponse));
+        	return loginResponse;
         } else {
             throw new AuthenticationDeniedException();
         }
