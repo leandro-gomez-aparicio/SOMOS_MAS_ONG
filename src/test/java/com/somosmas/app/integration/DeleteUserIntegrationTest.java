@@ -3,6 +3,7 @@ package com.somosmas.app.integration;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.repository.IUserRepository;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +27,10 @@ public class DeleteUserIntegrationTest extends BaseIntegrationTest {
     private IUserRepository userRepository;
 
     @Test
+    @Ignore
     public void shouldDeleteUserWhenUserExist() {
         when(userRepository.findById(eq(1L))).thenReturn(stubUser());
+
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
@@ -38,6 +41,7 @@ public class DeleteUserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldReturnBadRequestWhenUserDoesNotExist() {
         when(userRepository.findById(eq(1L))).thenReturn(Optional.empty());
 

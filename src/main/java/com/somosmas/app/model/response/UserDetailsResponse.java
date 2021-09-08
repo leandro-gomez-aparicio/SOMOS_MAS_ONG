@@ -1,5 +1,7 @@
 package com.somosmas.app.model.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDetailsResponse {
     private String email;
     private String firstName;

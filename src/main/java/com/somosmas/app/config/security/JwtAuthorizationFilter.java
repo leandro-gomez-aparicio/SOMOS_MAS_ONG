@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.Claims;
@@ -21,11 +22,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+@Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
 	private static final String HEADER = "Authorization";
 	private static final String PREFIX = "Bearer ";
 	private static final String SECRET = "secret";
+	private static final String SPACE = "";
+	private static final String AUTHORITIES = "authorities";
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -33,7 +37,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			String authenticationHeader = request.getHeader(HEADER);
 			if (existJWTToken(authenticationHeader)) {
 				Claims claims = validateToken(request);
-				if (claims.get("authorities") != null) {
+				if (claims.get(AUTHORITIES) != null) {
 					setUpSpringAuthentication(claims);
 				} else {
 					SecurityContextHolder.clearContext();
@@ -49,13 +53,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	}	
 
 	private Claims validateToken(HttpServletRequest request) {
-		String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
+		String jwtToken = request.getHeader(HEADER).replace(PREFIX, SPACE);
 		return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
 	}
 
 	private void setUpSpringAuthentication(Claims claims) {
 		@SuppressWarnings("unchecked")
-		List<String> authorities = (List) claims.get("authorities");
+		List<String> authorities = (List) claims.get(AUTHORITIES);
 
 		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
 				authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));

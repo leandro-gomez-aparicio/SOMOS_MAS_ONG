@@ -4,7 +4,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 
-public class BaseIntegrationTest {
+public abstract class BaseIntegrationTest {
 
     @LocalServerPort
     private int port;

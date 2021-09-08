@@ -140,7 +140,7 @@ public class User implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(role.getName()));
+        roles.add(new SimpleGrantedAuthority(this.getRole().getName()));
         return roles;
     }
 

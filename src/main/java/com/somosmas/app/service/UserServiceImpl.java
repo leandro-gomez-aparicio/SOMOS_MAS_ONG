@@ -3,13 +3,13 @@ package com.somosmas.app.service;
 import com.somosmas.app.config.security.RoleType;
 import com.somosmas.app.exception.UserAlreadyExistException;
 import com.somosmas.app.model.entity.User;
-import com.somosmas.app.model.request.RegisterUserRequest;
-import com.somosmas.app.model.response.RegisterUserResponse;
-import com.somosmas.app.repository.IRoleRepository;
+import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UserDetailsResponse;
+import com.somosmas.app.repository.IRoleRepository;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.IUserService;
 import com.somosmas.app.util.ConvertUtil;
+import com.somosmas.app.util.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +23,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, IUserService {
@@ -40,6 +39,9 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Override
     public void delete(Long id) throws NoSuchElementException {
         User user = userRepository.findById(id).orElseThrow(() ->
@@ -54,28 +56,20 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     }
 
     @Override
-    public RegisterUserResponse register(RegisterUserRequest registerUserRequest) throws UserAlreadyExistException {
+    public UserDetailsResponse register(UserDetailsRequest registerUserRequest) throws UserAlreadyExistException {
         if ((userRepository.findByEmail(registerUserRequest.getEmail())).isPresent()) {
             throw new UserAlreadyExistException(registerUserRequest.getEmail());
         }
 
-        User user = new User();
-        user.setEmail(registerUserRequest.getEmail());
-        user.setFirstName(registerUserRequest.getFirstName());
-        user.setLastName(registerUserRequest.getLastName());
-        user.setPhoto(registerUserRequest.getPhoto());
+        User user = ConvertUtil.convertToEntity(registerUserRequest);
         user.setTimestamp(Timestamp.from(Instant.now()));
         user.setSoftDelete(false);
         user.setRole(roleRepository.findByName(RoleType.ROLE_USER.name()));
         user.setPassword(bCryptPasswordEncoder.encode(registerUserRequest.getPassword()));
         userRepository.save(user);
-
-        // TODO: this should be replace by JWT
-        RegisterUserResponse registerUserResponse = new RegisterUserResponse();
-        registerUserResponse.setToken(UUID.randomUUID().toString());
-        registerUserResponse.setEmail(registerUserRequest.getEmail());
-        return registerUserResponse;
-
+        UserDetailsResponse response=ConvertUtil.convertToDto(user);
+        response.setToken(jwtUtil.generateToken(response));
+        return response;
     }
 
     @Override
@@ -84,7 +78,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(MessageFormat.format(USER_NOT_FOUND_ERROR_MESSAGE, username));
         }
-        return (UserDetails) user.get();
+        return user.get();
     }
     @Override
     public List<UserDetailsResponse> listActiveUsers() {

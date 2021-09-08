@@ -1,7 +1,8 @@
 package com.somosmas.app.integration;
 
-import com.somosmas.app.model.request.RegisterUserRequest;
-import com.somosmas.app.model.response.RegisterUserResponse;
+
+import com.somosmas.app.model.request.UserDetailsRequest;
+import com.somosmas.app.model.response.UserDetailsResponse;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,16 +19,16 @@ public class RegisterUserIntegrationTest extends BaseIntegrationTest {
 
     @Test
     public void shouldRegisterUser() {
-        RegisterUserRequest request = new RegisterUserRequest();
+        UserDetailsRequest request = new UserDetailsRequest();
         request.setEmail("paul@wayne.com");
         request.setPassword("abc1234&");
         request.setFirstName("Paul");
         request.setLastName("Wayne");
         request.setPhoto("");
-        HttpEntity<RegisterUserRequest> entity = new HttpEntity<>(request, headers);
+        HttpEntity<UserDetailsRequest> entity = new HttpEntity<>(request, headers);
 
-        ResponseEntity<RegisterUserResponse> response = restTemplate.exchange(
-                createURLWithPort("/auth/register"), HttpMethod.POST, entity, RegisterUserResponse.class);
+        ResponseEntity<UserDetailsResponse> response = restTemplate.exchange(
+                createURLWithPort("/auth/register"), HttpMethod.POST, entity, UserDetailsResponse.class);
 
         Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
         Assert.assertEquals("paul@wayne.com", response.getBody().getEmail());

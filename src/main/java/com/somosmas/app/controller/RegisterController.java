@@ -1,9 +1,8 @@
 package com.somosmas.app.controller;
 
 import com.somosmas.app.exception.UserAlreadyExistException;
-import com.somosmas.app.model.common.UserDetails;
-import com.somosmas.app.model.request.RegisterUserRequest;
-import com.somosmas.app.model.response.RegisterUserResponse;
+import com.somosmas.app.model.request.UserDetailsRequest;
+import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.service.abstraction.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,10 +25,10 @@ public class RegisterController {
     @PostMapping(value = "/register",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<? extends UserDetails> register(@Valid @RequestBody RegisterUserRequest registerUserRequest)
+    public ResponseEntity<?> register(@Valid @RequestBody UserDetailsRequest registerUserRequest)
             throws UserAlreadyExistException {
-        RegisterUserResponse registerUserResponse = userService.register(registerUserRequest);
-        return new ResponseEntity<>(registerUserResponse, HttpStatus.CREATED);
+        UserDetailsResponse userDetailsResponse = userService.register(registerUserRequest);
+        return new ResponseEntity<>(userDetailsResponse, HttpStatus.CREATED);
     }
 
 }
