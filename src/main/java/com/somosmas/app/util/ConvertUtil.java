@@ -2,8 +2,10 @@ package com.somosmas.app.util;
 
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.User;
+import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.OrganizationResponse;
+import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,15 @@ public class ConvertUtil {
     public static OrganizationResponse convertToDto(Organization organization) {
 		return map(organization, OrganizationResponse.class);
 	}
+    
+    public static UpdateOrganizationResponse convertToDtoUpdate(Organization organization) {
+		return map(organization, UpdateOrganizationResponse.class);
+	}
+    
+    public static Organization convertToEntity(UpdateOrganizationRequest request){
+        return map(request,Organization.class);
+    }
+
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
         return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
     }
