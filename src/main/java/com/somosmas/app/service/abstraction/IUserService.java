@@ -11,8 +11,12 @@ import java.util.Optional;
 public interface IUserService {
 
     Optional<User> findById(Long id);
+
     List<UserDetailsResponse> listActiveUsers();
+
     void delete(Long id);
+
+    UserDetailsResponse getUserDetailsBy(String token);
 
     UserDetailsResponse register(UserDetailsRequest registerUserRequest) throws UserAlreadyExistException;
 }

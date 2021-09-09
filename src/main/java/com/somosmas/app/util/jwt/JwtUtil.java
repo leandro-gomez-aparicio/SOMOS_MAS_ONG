@@ -56,4 +56,8 @@ public class JwtUtil {
         return String.format(BEARER_TOKEN, token);
     }
 
+    public String extractUserEmail(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
 }

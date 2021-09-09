@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         user.setRole(roleRepository.findByName(RoleType.ROLE_USER.name()));
         user.setPassword(bCryptPasswordEncoder.encode(registerUserRequest.getPassword()));
         userRepository.save(user);
-        UserDetailsResponse response=ConvertUtil.convertToDto(user);
+        UserDetailsResponse response = ConvertUtil.convertToDto(user);
         response.setToken(jwtUtil.generateToken(response));
         return response;
     }
@@ -80,9 +80,26 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         }
         return user.get();
     }
+
     @Override
     public List<UserDetailsResponse> listActiveUsers() {
-        return ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse(),UserDetailsResponse.class);
+        return ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse(), UserDetailsResponse.class);
+    }
+
+    @Override
+    public UserDetailsResponse getUserDetailsBy(String token) throws UsernameNotFoundException {
+        String userEmail = jwtUtil.extractUserEmail(token);
+        Optional<User> userEntity = userRepository.findByEmail(userEmail);
+        if (userEntity.isEmpty()) {
+            throw new UsernameNotFoundException(MessageFormat.format(USER_NOT_FOUND_ERROR_MESSAGE, userEmail));
+        }
+        UserDetailsResponse userResponse = new UserDetailsResponse();
+        userResponse.setEmail(userEntity.get().getEmail());
+        userResponse.setFirstName(userEntity.get().getFirstName());
+        userResponse.setLastName(userEntity.get().getLastName());
+        userResponse.setPhoto(userEntity.get().getPhoto());
+        ;
+        return userResponse;
     }
 
 }
