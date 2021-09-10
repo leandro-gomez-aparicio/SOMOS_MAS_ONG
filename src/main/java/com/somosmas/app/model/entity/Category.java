@@ -100,4 +100,5 @@ public class Category implements Serializable {
     public void setNews(List<News> news) {
         this.news = news;
     }
+
 }

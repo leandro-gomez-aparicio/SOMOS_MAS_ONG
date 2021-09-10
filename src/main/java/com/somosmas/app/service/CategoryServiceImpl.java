@@ -7,6 +7,7 @@ import com.somosmas.app.repository.ICategoryRepository;
 import com.somosmas.app.service.abstraction.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -48,6 +49,20 @@ public class CategoryServiceImpl implements ICategoryService {
         response.setCategories(categoriesResponses);
         return response;
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CategoryResponse findByIdCategory(Long idCategory) {
+        Category category = categoryRepository.findByIdCategory(idCategory)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(CATEGORY_ID_NOT_FOUND, idCategory)));
+
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setName(category.getName());
+        categoryResponse.setDescription(category.getDescription());
+        categoryResponse.setImage(category.getImage());
+        categoryResponse.setIdCategory(category.getIdCategory());
+        return categoryResponse;
     }
 
 }

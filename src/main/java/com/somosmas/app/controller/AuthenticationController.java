@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
+   @Autowired
     IUserService userService;
 
     @Autowired

@@ -42,7 +42,7 @@ public class LoginIntegrationTest extends BaseIntegrationTest {
         loginRequest.setPassword("1234");
         HttpEntity<UserDetailsRequest> entity = new HttpEntity<>(loginRequest, headers);
 
-        ResponseEntity<ErrorInfo> response = restTemplate.exchange(
+       ResponseEntity<ErrorInfo> response = restTemplate.exchange(
                 createURLWithPort("/auth/login"), HttpMethod.POST, entity, ErrorInfo.class);
 
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -56,7 +56,7 @@ public class LoginIntegrationTest extends BaseIntegrationTest {
 
         UserDetailsRequest loginRequest = new UserDetailsRequest();
         loginRequest.setEmail("user@alkemy.com");
-        loginRequest.setPassword("abc1234&");
+       loginRequest.setPassword("abc1234&");
         HttpEntity<UserDetailsRequest> entity = new HttpEntity<>(loginRequest, headers);
 
         ResponseEntity<UserDetailsResponse> response = restTemplate.exchange(
@@ -71,7 +71,7 @@ public class LoginIntegrationTest extends BaseIntegrationTest {
         user.setIdUser(1L);
         user.setEmail("user@alkemy.com");
         user.setPhoto("photo");
-        user.setFirstName("Bruce");
+       user.setFirstName("Bruce");
         user.setLastName("Wayne");
         user.setPassword("abc1234&");
         return Optional.of(user);
