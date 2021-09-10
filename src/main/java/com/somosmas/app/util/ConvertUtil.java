@@ -1,7 +1,9 @@
 package com.somosmas.app.util;
 
+import com.somosmas.app.model.entity.Category;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.User;
+import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.OrganizationResponse;
@@ -28,6 +30,9 @@ public class ConvertUtil {
     }
     public static User convertToEntity(UserDetailsRequest request){
         return map(request,User.class);
+    }
+    public static Category convertToEntity(CategoryRequest request){
+        return map(request,Category.class);
     }
     
     public static OrganizationResponse convertToDto(Organization organization) {
