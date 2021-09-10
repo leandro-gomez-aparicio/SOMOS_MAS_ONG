@@ -12,7 +12,4 @@ public class CategoryResponse {
 		this.name = name;
 	}
     
-    
-
-
 }
