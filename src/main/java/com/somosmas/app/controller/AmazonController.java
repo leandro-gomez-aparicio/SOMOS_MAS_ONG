@@ -1,6 +1,6 @@
 package com.somosmas.app.controller;
 
-import com.somosmas.app.config.AmazonConfiguration;
+import com.somosmas.app.config.AmazonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/aws")
 public class AmazonController {
 
-    private AmazonConfiguration amazonClient;
+    private AmazonConfig amazonClient;
 
     @Autowired
-    AmazonController(AmazonConfiguration amazonClient) {
+    AmazonController(AmazonConfig amazonClient) {
         this.amazonClient = amazonClient;
     }
 

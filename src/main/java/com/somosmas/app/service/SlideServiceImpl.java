@@ -25,8 +25,8 @@ public class SlideServiceImpl implements ISlideService {
 
     @Override
     public void delete(Long id) {
-       Slide slide = slideRepository.findById(id).orElseThrow(() ->
-               new NoSuchElementException(MessageFormat.format(SLIDE_ID_NOT_FOUND, id)));
-       slideRepository.deleteById(id);
+        slideRepository.findById(id).orElseThrow(() ->
+                new NoSuchElementException(MessageFormat.format(SLIDE_ID_NOT_FOUND, id)));
+        slideRepository.deleteById(id);
     }
 }

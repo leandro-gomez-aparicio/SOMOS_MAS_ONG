@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AmazonConfiguration {
+public class AmazonConfig {
 
     @Value("${amazonProperties.endpointUrl}")
     private String endpointUrl;
