@@ -6,6 +6,7 @@ import org.springframework.validation.FieldError;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ErrorInfo {
 
@@ -15,8 +16,8 @@ public class ErrorInfo {
     private int statusCode;
     @JsonProperty("uri")
     private String uriRequested;
-	@JsonProperty("errors")
-	private List<String> errors;
+    @JsonProperty("errors")
+    private List<String> errors;
 
     public ErrorInfo() {
         super();
@@ -27,7 +28,7 @@ public class ErrorInfo {
         this.message = message;
         this.statusCode = statusCode;
         this.uriRequested = uriRequested;
-        this.errors=new ArrayList<>();
+        this.errors = new ArrayList<>();
     }
 
     public String getMessage() {

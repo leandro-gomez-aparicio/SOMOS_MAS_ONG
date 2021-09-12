@@ -1,7 +1,7 @@
 package com.somosmas.app.service.abstraction;
 
 
-import com.somosmas.app.exception.CategoryAlreadyExistException;
+import com.somosmas.app.exception.custom.CategoryAlreadyExistException;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.ListCategoryResponse;

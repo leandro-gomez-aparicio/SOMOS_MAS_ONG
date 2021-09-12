@@ -1,5 +1,6 @@
 package com.somosmas.app.exception;
 
+import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

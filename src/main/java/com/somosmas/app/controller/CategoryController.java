@@ -1,6 +1,6 @@
 package com.somosmas.app.controller;
 
-import com.somosmas.app.exception.CategoryAlreadyExistException;
+import com.somosmas.app.exception.custom.CategoryAlreadyExistException;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.service.abstraction.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

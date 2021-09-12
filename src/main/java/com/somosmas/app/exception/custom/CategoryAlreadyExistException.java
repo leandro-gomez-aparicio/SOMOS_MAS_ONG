@@ -1,4 +1,4 @@
-package com.somosmas.app.exception;
+package com.somosmas.app.exception.custom;
 
 import java.text.MessageFormat;
 
