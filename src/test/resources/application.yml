@@ -1,0 +1,6 @@
+amazonProperties:
+    endpointUrl: https://s3.us-east-2.amazonaws.com
+    accessKey: AKIAX2K6IMK7DAIQ6TDG
+    secretKey: h/aILea9unETMeiihJcUahS1opYF6PuCBeKstiO
+    bucketName: alkemy-ong
+    region: sa-east-1
