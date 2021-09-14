@@ -1,9 +1,11 @@
 package com.somosmas.app.util;
 
 import com.somosmas.app.model.entity.Category;
+import com.somosmas.app.model.entity.Contact;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.CategoryRequest;
+import com.somosmas.app.model.request.ContactRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.OrganizationResponse;
@@ -45,6 +47,9 @@ public class ConvertUtil {
     
     public static Organization convertToEntity(UpdateOrganizationRequest request){
         return map(request,Organization.class);
+    }
+    public static Contact convertToEntity(ContactRequest request){
+        return map(request,Contact.class);
     }
 
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){

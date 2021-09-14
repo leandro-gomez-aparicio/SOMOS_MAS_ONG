@@ -1,5 +1,6 @@
 package com.somosmas.app.exception;
 
+import com.somosmas.app.exception.custom.ContactAlreadyExistException;
 import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +53,12 @@ public class ErrorHandler {
             errorInfo.addFieldError(fieldError);
         }
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = ContactAlreadyExistException.class)
+    public ResponseEntity<Object> contactAlreadyExistException(HttpServletRequest request, ContactAlreadyExistException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(exception.getMessage(), HttpStatus.CONFLICT.value(), request.getRequestURI());
+        return new ResponseEntity<>(errorInfo, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = Exception.class)
