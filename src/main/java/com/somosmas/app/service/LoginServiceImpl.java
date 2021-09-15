@@ -36,6 +36,7 @@ public class LoginServiceImpl implements ILoginService {
         UserDetailsResponse response = new UserDetailsResponse();
         if (entity.isPresent()) {
             response = ConvertUtil.convertToDto(entity.get());
+            response.setRole(entity.get().getRole().getName());
             response.setToken(jwtUtil.generateToken(response));
         }
         return response;

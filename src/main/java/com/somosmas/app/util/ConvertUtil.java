@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,15 +49,15 @@ public class ConvertUtil {
     }
 
     public static UpdateOrganizationResponse convertToDtoUpdate(Organization organization) {
-		return map(organization, UpdateOrganizationResponse.class);
-	}
-    
+        return map(organization, UpdateOrganizationResponse.class);
+    }
+
     public static CategoryResponse convertToDto(Category category) {
-		return map(category, CategoryResponse.class);
-	}
-    
-    public static Organization convertToEntity(UpdateOrganizationRequest request){
-        return map(request,Organization.class);
+        return map(category, CategoryResponse.class);
+    }
+
+    public static Organization convertToEntity(UpdateOrganizationRequest request) {
+        return map(request, Organization.class);
     }
 
     public static Contact convertToEntity(ContactRequest request) {
@@ -65,6 +66,16 @@ public class ConvertUtil {
 
     public static Activity convertToEntity(ActivityRequest request) {
         return map(request, Activity.class);
+    }
+
+    public static List<UserDetailsResponse> convertToDto(List<User> users) {
+        List<UserDetailsResponse> responses = new ArrayList<>();
+        for (User user : users) {
+            UserDetailsResponse response = modelMapper.map(user, UserDetailsResponse.class);
+            response.setRole(user.getRole().getName());
+            responses.add(response);
+        }
+        return responses;
     }
 
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType) {

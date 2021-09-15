@@ -5,6 +5,7 @@ import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UserDetailsResponse;
+import com.somosmas.app.model.response.ListUserResponse;
 import com.somosmas.app.repository.IRoleRepository;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.IUserService;
@@ -67,6 +68,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         user.setPassword(bCryptPasswordEncoder.encode(registerUserRequest.getPassword()));
         userRepository.save(user);
         UserDetailsResponse response = ConvertUtil.convertToDto(user);
+        response.setRole(user.getRole().getName());
         response.setToken(jwtUtil.generateToken(response));
         return response;
     }
@@ -81,8 +83,11 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     }
 
     @Override
-    public List<UserDetailsResponse> listActiveUsers() {
-        return ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse(), UserDetailsResponse.class);
+    public ListUserResponse listActiveUsers() {
+        List<UserDetailsResponse> list= ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse());
+        ListUserResponse listUserResponse=new ListUserResponse();
+        listUserResponse.setUsers(list);
+        return listUserResponse;
     }
 
     @Override

@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -39,7 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        //TODO: this method should be review by OT72-33 and OT72-26
         httpSecurity.csrf()
                 .disable()
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -47,13 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "/auth/**", "/register", "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/news", "/activities", "/organization/public", "/slides").permitAll()
                 .antMatchers("/activities/**", "/categories/**", "/news/**", "/users/**", "/slides/**").hasRole("ADMIN")
-                .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
-        httpSecurity.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return null;
+                .anyRequest().hasAnyRole("ADMIN","USER");
     }
 
     @Bean

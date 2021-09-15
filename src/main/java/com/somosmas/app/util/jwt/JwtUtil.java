@@ -1,6 +1,5 @@
 package com.somosmas.app.util.jwt;
 
-import com.somosmas.app.config.security.RoleType;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -35,12 +34,12 @@ public class JwtUtil {
 
     public String generateToken(UserDetailsResponse login) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, login.getEmail());
+        return createToken(claims, login.getEmail(),login.getRole());
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    private String createToken(Map<String, Object> claims, String subject,String role) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList(RoleType.ROLE_USER.getDescription());
+                .commaSeparatedStringToAuthorityList(role);
 
         String token = Jwts
                 .builder()
@@ -50,7 +49,7 @@ public class JwtUtil {
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))//1 hour
                 .signWith(SignatureAlgorithm.HS512,
                         SECRET_KEY.getBytes()).compact();
         return String.format(BEARER_TOKEN, token);
