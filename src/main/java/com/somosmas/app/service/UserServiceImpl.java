@@ -98,7 +98,6 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         userResponse.setFirstName(userEntity.get().getFirstName());
         userResponse.setLastName(userEntity.get().getLastName());
         userResponse.setPhoto(userEntity.get().getPhoto());
-        ;
         return userResponse;
     }
 

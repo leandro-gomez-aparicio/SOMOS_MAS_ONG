@@ -1,9 +1,11 @@
-package com.somosmas.app.service.abstraction;
+package com.somosmas.app.service;
 
 import com.somosmas.app.model.entity.News;
 import com.somosmas.app.repository.INewsRepository;
 import java.text.MessageFormat;
 import java.util.NoSuchElementException;
+
+import com.somosmas.app.service.abstraction.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
