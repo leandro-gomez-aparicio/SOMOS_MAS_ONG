@@ -10,6 +10,7 @@ import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.ContactRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
+import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.model.response.UserDetailsResponse;
@@ -47,11 +48,15 @@ public class ConvertUtil {
     }
 
     public static UpdateOrganizationResponse convertToDtoUpdate(Organization organization) {
-        return map(organization, UpdateOrganizationResponse.class);
-    }
-
-    public static Organization convertToEntity(UpdateOrganizationRequest request) {
-        return map(request, Organization.class);
+		return map(organization, UpdateOrganizationResponse.class);
+	}
+    
+    public static CategoryResponse convertToDto(Category category) {
+		return map(category, CategoryResponse.class);
+	}
+    
+    public static Organization convertToEntity(UpdateOrganizationRequest request){
+        return map(request,Organization.class);
     }
 
     public static Contact convertToEntity(ContactRequest request) {

@@ -12,6 +12,8 @@ public interface ICategoryService {
     void create(CategoryRequest categoryRequest) throws CategoryAlreadyExistException;
 
     void delete(Long id);
+    
+    CategoryResponse update(CategoryRequest category, Long id);
 
     CategoryResponse findByIdCategory(Long idCategory);
 

@@ -54,6 +54,20 @@ public class CategoryServiceImpl implements ICategoryService {
         return response;
 
     }
+    
+    @Override
+    public CategoryResponse update(CategoryRequest categoryRequest, Long id) throws NoSuchElementException {
+        categoryRepository.findById(id).orElseThrow(() -> new NoSuchElementException(
+                MessageFormat.format(CATEGORY_ID_NOT_FOUND, id)));
+        
+        Category category = ConvertUtil.convertToEntity(categoryRequest);
+        
+        category.setIdCategory(id);
+        
+        category = categoryRepository.save(category);
+        
+        return ConvertUtil.convertToDto(category);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -61,12 +75,7 @@ public class CategoryServiceImpl implements ICategoryService {
         Category category = categoryRepository.findByIdCategory(idCategory)
                 .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(CATEGORY_ID_NOT_FOUND, idCategory)));
 
-        CategoryResponse categoryResponse = new CategoryResponse();
-        categoryResponse.setName(category.getName());
-        categoryResponse.setDescription(category.getDescription());
-        categoryResponse.setImage(category.getImage());
-        categoryResponse.setIdCategory(category.getIdCategory());
-        return categoryResponse;
+        return ConvertUtil.convertToDto(category);
     }
 
     @Override
@@ -79,6 +88,4 @@ public class CategoryServiceImpl implements ICategoryService {
         category.setSoftDelete(false);
         categoryRepository.save(category);
     }
-
-
 }

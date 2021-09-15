@@ -2,6 +2,7 @@ package com.somosmas.app.controller;
 
 import com.somosmas.app.exception.custom.CategoryAlreadyExistException;
 import com.somosmas.app.model.request.CategoryRequest;
+import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.service.abstraction.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/categories")
@@ -46,4 +48,9 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.getCategoryName(), HttpStatus.OK);
     }
 
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequest category, @PathVariable Long id){
+        CategoryResponse categoryUpdated = categoryService.update(category, id);
+        return new ResponseEntity<>(categoryUpdated, HttpStatus.CREATED);
+    }
 }
