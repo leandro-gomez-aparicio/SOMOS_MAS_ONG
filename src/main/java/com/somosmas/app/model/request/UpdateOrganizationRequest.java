@@ -27,6 +27,12 @@ public class UpdateOrganizationRequest {
 	private String welcomeText;
 
 	private String aboutUsText;
+	
+    private String facebookURL;
+    
+    private String linkedInURL;
+    
+    private String instagramURL;
 
 	private Timestamp timestamp;
 
@@ -37,7 +43,7 @@ public class UpdateOrganizationRequest {
 	}
 
 	public UpdateOrganizationRequest(Long idOrganization, String name, String image, String address, Integer phone,
-			String email, String welcomeText, String aboutUsText, Timestamp timestamp, Boolean softDelete) {
+			String email, String welcomeText, String aboutUsText, String facebookURL, String linkedInURL, String instagramURL, Timestamp timestamp, Boolean softDelete) {
 		super();
 		this.idOrganization = idOrganization;
 		this.name = name;
@@ -47,6 +53,9 @@ public class UpdateOrganizationRequest {
 		this.email = email;
 		this.welcomeText = welcomeText;
 		this.aboutUsText = aboutUsText;
+		this.facebookURL = facebookURL;
+		this.linkedInURL = linkedInURL;
+		this.instagramURL = instagramURL;
 		this.timestamp = timestamp;
 		this.softDelete = softDelete;
 	}
@@ -113,6 +122,30 @@ public class UpdateOrganizationRequest {
 
 	public void setAboutUsText(String aboutUsText) {
 		this.aboutUsText = aboutUsText;
+	}
+	
+	public String getFacebookURL() {
+		return facebookURL;
+	}
+
+	public void setFacebookURL(String facebookURL) {
+		this.facebookURL = facebookURL;
+	}
+
+	public String getLinkedInURL() {
+		return linkedInURL;
+	}
+
+	public void setLinkedInURL(String linkedInURL) {
+		this.linkedInURL = linkedInURL;
+	}
+
+	public String getInstagramURL() {
+		return instagramURL;
+	}
+
+	public void setInstagramURL(String instagramURL) {
+		this.instagramURL = instagramURL;
 	}
 
 	public Timestamp getTimestamp() {

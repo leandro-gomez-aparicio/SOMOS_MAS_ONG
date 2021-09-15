@@ -41,12 +41,21 @@ public class Organization implements Serializable {
     @Column(name = "about_us_text")
     private String aboutUsText;
 
+    @Column(name = "facebook_url")
+    private String facebookURL;
+    
+    @Column(name = "linkedIn_url")
+    private String linkedInURL;
+    
+    @Column(name = "instagram_url")
+    private String instagramURL;
+
     @Column(name = "timestamp")
     private Timestamp timestamp;
 
     @Column(name = "soft_delete")
     private Boolean softDelete;
-
+    
     public Organization() {
     }
 
@@ -113,7 +122,31 @@ public class Organization implements Serializable {
     public void setAboutUsText(String aboutUsText) {
         this.aboutUsText = aboutUsText;
     }
+    
+    public String getFacebookURL() {
+		return facebookURL;
+	}
 
+	public void setFacebookURL(String facebookURL) {
+		this.facebookURL = facebookURL;
+	}
+
+	public String getLinkedInURL() {
+		return linkedInURL;
+	}
+
+	public void setLinkedInURL(String linkedInURL) {
+		this.linkedInURL = linkedInURL;
+	}
+
+	public String getInstagramURL() {
+		return instagramURL;
+	}
+
+	public void setInstagramURL(String instagramURL) {
+		this.instagramURL = instagramURL;
+	}
+	
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -129,5 +162,4 @@ public class Organization implements Serializable {
     public void setSoftDelete(Boolean softDelete) {
         this.softDelete = softDelete;
     }
-
 }
