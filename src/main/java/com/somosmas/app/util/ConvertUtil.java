@@ -1,9 +1,11 @@
 package com.somosmas.app.util;
 
+import com.somosmas.app.model.entity.Activity;
 import com.somosmas.app.model.entity.Category;
 import com.somosmas.app.model.entity.Contact;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.User;
+import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.ContactRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
@@ -52,6 +54,10 @@ public class ConvertUtil {
         return map(request,Contact.class);
     }
 
+	public static Activity convertToEntity(ActivityRequest request) {
+		return map(request,Activity.class);
+	}
+	
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
         return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
     }
@@ -63,5 +69,6 @@ public class ConvertUtil {
 
         return modelMapper.map(source, destinationType);
     }
+
 
 }

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IActivityRepository extends JpaRepository<Activity, Long> {
 
+	boolean existsByName(String name);
+
 }
