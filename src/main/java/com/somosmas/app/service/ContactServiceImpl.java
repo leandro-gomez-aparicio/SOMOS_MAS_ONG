@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ContactServiceImpl implements IContactService {
+
     @Autowired
     private IContactRepository contactRepository;
 
     @Override
     public void create(ContactRequest request) throws ContactAlreadyExistException {
-        if(contactRepository.existsByEmail(request.getEmail()))
+        if (contactRepository.existsByEmail(request.getEmail()))
             throw new ContactAlreadyExistException(request.getEmail());
         Contact contact = ConvertUtil.convertToEntity(request);
         contact.setSoftDelete(false);

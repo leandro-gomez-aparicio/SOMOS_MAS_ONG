@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ConvertUtil {
+
     private static ModelMapper modelMapper;
 
     @Autowired
@@ -32,38 +33,41 @@ public class ConvertUtil {
     public static UserDetailsResponse convertToDto(User user) {
         return map(user, UserDetailsResponse.class);
     }
-    public static User convertToEntity(UserDetailsRequest request){
-        return map(request,User.class);
-    }
-    public static Category convertToEntity(CategoryRequest request){
-        return map(request,Category.class);
-    }
-    
-    public static OrganizationResponse convertToDto(Organization organization) {
-		return map(organization, OrganizationResponse.class);
-	}
-    
-    public static UpdateOrganizationResponse convertToDtoUpdate(Organization organization) {
-		return map(organization, UpdateOrganizationResponse.class);
-	}
-    
-    public static Organization convertToEntity(UpdateOrganizationRequest request){
-        return map(request,Organization.class);
-    }
-    public static Contact convertToEntity(ContactRequest request){
-        return map(request,Contact.class);
+
+    public static User convertToEntity(UserDetailsRequest request) {
+        return map(request, User.class);
     }
 
-	public static Activity convertToEntity(ActivityRequest request) {
-		return map(request,Activity.class);
-	}
-	
-    public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
-        return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
+    public static Category convertToEntity(CategoryRequest request) {
+        return map(request, Category.class);
+    }
+
+    public static OrganizationResponse convertToDto(Organization organization) {
+        return map(organization, OrganizationResponse.class);
+    }
+
+    public static UpdateOrganizationResponse convertToDtoUpdate(Organization organization) {
+        return map(organization, UpdateOrganizationResponse.class);
+    }
+
+    public static Organization convertToEntity(UpdateOrganizationRequest request) {
+        return map(request, Organization.class);
+    }
+
+    public static Contact convertToEntity(ContactRequest request) {
+        return map(request, Contact.class);
+    }
+
+    public static Activity convertToEntity(ActivityRequest request) {
+        return map(request, Activity.class);
+    }
+
+    public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType) {
+        return input.stream().map(i -> modelMapper.map(i, destinationType)).collect(Collectors.toList());
     }
 
     private static <D> D map(Object source, Class<D> destinationType) {
-        if(source == null) {
+        if (source == null) {
             return null;
         }
 

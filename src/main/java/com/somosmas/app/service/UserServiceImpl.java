@@ -9,6 +9,7 @@ import com.somosmas.app.repository.IRoleRepository;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.IUserService;
 import com.somosmas.app.util.ConvertUtil;
+import com.somosmas.app.util.TimestampUtil;
 import com.somosmas.app.util.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.text.MessageFormat;
-import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -62,7 +61,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         }
 
         User user = ConvertUtil.convertToEntity(registerUserRequest);
-        user.setTimestamp(Timestamp.from(Instant.now()));
+        user.setTimestamp(TimestampUtil.getCurrentTime());
         user.setSoftDelete(false);
         user.setRole(roleRepository.findByName(RoleType.ROLE_USER.name()));
         user.setPassword(bCryptPasswordEncoder.encode(registerUserRequest.getPassword()));

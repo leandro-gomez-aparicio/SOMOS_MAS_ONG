@@ -7,9 +7,7 @@ import com.somosmas.app.model.response.UpdateOrganizationResponse;
 public interface IOrganizationService {
 
     OrganizationResponse getOrganizationDetails();
-    
+
     UpdateOrganizationResponse updateOrganization(UpdateOrganizationRequest organization);
-    
-    UpdateOrganizationResponse findById(Long id); 
 
 }

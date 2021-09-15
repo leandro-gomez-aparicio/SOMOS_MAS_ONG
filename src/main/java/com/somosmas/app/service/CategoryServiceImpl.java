@@ -8,13 +8,12 @@ import com.somosmas.app.model.response.ListCategoryResponse;
 import com.somosmas.app.repository.ICategoryRepository;
 import com.somosmas.app.service.abstraction.ICategoryService;
 import com.somosmas.app.util.ConvertUtil;
+import com.somosmas.app.util.TimestampUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.text.MessageFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -76,7 +75,7 @@ public class CategoryServiceImpl implements ICategoryService {
             throw new CategoryAlreadyExistException(categoryRequest.getName());
         }
         Category category = ConvertUtil.convertToEntity(categoryRequest);
-        category.setTimeStamp(Timestamp.from(Instant.now()));
+        category.setTimeStamp(TimestampUtil.getCurrentTime());
         category.setSoftDelete(false);
         categoryRepository.save(category);
     }

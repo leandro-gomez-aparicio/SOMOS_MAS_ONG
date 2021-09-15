@@ -7,6 +7,7 @@ import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
 import com.somosmas.app.service.abstraction.IOrganizationService;
 import com.somosmas.app.util.ConvertUtil;
+import com.somosmas.app.util.TimestampUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -36,17 +37,19 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Override
     public UpdateOrganizationResponse updateOrganization(UpdateOrganizationRequest updateOrganizationRequest) throws NoSuchElementException {
-        organizationRepository.findById(updateOrganizationRequest.getIdOrganization()).orElseThrow(() -> new NoSuchElementException(
-                MessageFormat.format(ORGANIZATION_ID_NOT_FOUND, updateOrganizationRequest.getIdOrganization())));
-        Organization organization = organizationRepository.save(ConvertUtil.convertToEntity(updateOrganizationRequest));
-        return ConvertUtil.convertToDtoUpdate(organization);
-    }
-
-    @Override
-    public UpdateOrganizationResponse findById(Long id) {
-        Organization organization = organizationRepository.findById(id).orElseThrow(() -> new NoSuchElementException(
-                MessageFormat.format(ORGANIZATION_ID_NOT_FOUND, id)));
-        return ConvertUtil.convertToDtoUpdate(organization);
+        Long idOrganization = updateOrganizationRequest.getIdOrganization();
+        Organization organization = organizationRepository.findById(idOrganization)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(ORGANIZATION_ID_NOT_FOUND, idOrganization)));
+        organization.setPhone(updateOrganizationRequest.getPhone());
+        organization.setAddress(updateOrganizationRequest.getAddress());
+        organization.setImage(updateOrganizationRequest.getImage());
+        organization.setName(updateOrganizationRequest.getName());
+        organization.setAddress(updateOrganizationRequest.getAddress());
+        organization.setWelcomeText(updateOrganizationRequest.getWelcomeText());
+        organization.setAboutUsText(updateOrganizationRequest.getAboutUsText());
+        organization.setEmail(updateOrganizationRequest.getEmail());
+        organization.setTimestamp(TimestampUtil.getCurrentTime());
+        return ConvertUtil.convertToDtoUpdate(organizationRepository.save(organization));
     }
 
 }
