@@ -6,6 +6,8 @@ import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.model.response.ListUserResponse;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public interface IUserService {
@@ -19,4 +21,6 @@ public interface IUserService {
     UserDetailsResponse getUserDetailsBy(String token);
 
     UserDetailsResponse register(UserDetailsRequest registerUserRequest) throws UserAlreadyExistException;
+    
+    UserDetailsResponse update(Long id, UserDetailsRequest userRequest) throws NoSuchElementException;
 }

@@ -104,5 +104,18 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         userResponse.setPhoto(userEntity.get().getPhoto());
         return userResponse;
     }
+    
+    public UserDetailsResponse update(Long id, UserDetailsRequest userRequest) throws NoSuchElementException{
+		userRepository.findById(id).orElseThrow(() -> 
+		new NoSuchElementException(MessageFormat.format(USER_ID_NOT_FOUND, id)));
+		
+		User user = ConvertUtil.convertToEntity(userRequest);
+		user.setPassword(bCryptPasswordEncoder.encode(userRequest.getPassword()));
+		user.setTimestamp(TimestampUtil.getCurrentTime());
+		user.setIdUser(id);
+		
+		userRepository.save(user);
+		return ConvertUtil.convertToDto(user);
+    }
 
 }
