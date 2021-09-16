@@ -1,6 +1,8 @@
 package com.somosmas.app.integration;
 
+import com.somosmas.app.config.security.RoleType;
 import com.somosmas.app.exception.ErrorInfo;
+import com.somosmas.app.model.entity.Role;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UserDetailsResponse;
@@ -42,7 +44,7 @@ public class LoginIntegrationTest extends BaseIntegrationTest {
         loginRequest.setPassword("1234");
         HttpEntity<UserDetailsRequest> entity = new HttpEntity<>(loginRequest, headers);
 
-       ResponseEntity<ErrorInfo> response = restTemplate.exchange(
+        ResponseEntity<ErrorInfo> response = restTemplate.exchange(
                 createURLWithPort("/auth/login"), HttpMethod.POST, entity, ErrorInfo.class);
 
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -56,7 +58,7 @@ public class LoginIntegrationTest extends BaseIntegrationTest {
 
         UserDetailsRequest loginRequest = new UserDetailsRequest();
         loginRequest.setEmail("user@alkemy.com");
-       loginRequest.setPassword("abc1234&");
+        loginRequest.setPassword("abc1234&");
         HttpEntity<UserDetailsRequest> entity = new HttpEntity<>(loginRequest, headers);
 
         ResponseEntity<UserDetailsResponse> response = restTemplate.exchange(
@@ -66,14 +68,22 @@ public class LoginIntegrationTest extends BaseIntegrationTest {
         Assert.assertNotNull(response.getBody().getToken());
     }
 
+    private Role stubRole() {
+        Role role = new Role();
+        role.setIdRole(1L);
+        role.setName(RoleType.ROLE_USER.name());
+        return role;
+    }
+
     private Optional<User> stubUser() {
         User user = new User();
         user.setIdUser(1L);
         user.setEmail("user@alkemy.com");
         user.setPhoto("photo");
-       user.setFirstName("Bruce");
+        user.setFirstName("Bruce");
         user.setLastName("Wayne");
         user.setPassword("abc1234&");
+        user.setRole(stubRole());
         return Optional.of(user);
     }
 
