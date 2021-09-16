@@ -30,6 +30,7 @@ public class Slide implements Serializable {
 
     @Column(name = "organization_id")
     private Long organizationId;
+    
 
     public Slide() {
     }

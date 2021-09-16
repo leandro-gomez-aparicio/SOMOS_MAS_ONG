@@ -4,6 +4,7 @@ import com.somosmas.app.model.entity.Activity;
 import com.somosmas.app.model.entity.Category;
 import com.somosmas.app.model.entity.Contact;
 import com.somosmas.app.model.entity.Organization;
+import com.somosmas.app.model.entity.Slide;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
@@ -12,6 +13,7 @@ import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
+import com.somosmas.app.model.response.SlideResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import org.modelmapper.ModelMapper;
@@ -66,6 +68,10 @@ public class ConvertUtil {
 
     public static Activity convertToEntity(ActivityRequest request) {
         return map(request, Activity.class);
+    }
+    
+    public static SlideResponse convertToDto(Slide slide) {
+        return map(slide, SlideResponse.class);
     }
 
     public static List<UserDetailsResponse> convertToDto(List<User> users) {
