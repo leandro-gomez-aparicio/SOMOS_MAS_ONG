@@ -35,10 +35,15 @@ public class GetOrganizationDetailsIntegrationTest extends BaseIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/organization/public"), HttpMethod.GET, entity, String.class);
 
-        String expected = "{\"name\":\"Somos Mas\",\"image\":\"http://s3/somosmas.jpg\", "
-                + "\"address\":\"Street 1234\", \"phone\":123456}";
+        String expected = "{\"name\":\"Somos Mas\"," +
+                "\"image\":\"http://s3/somosmas.jpg\"," +
+                "\"address\":\"Street 1234\"," +
+                "\"phone\":123456," +
+                "\"facebookURL\":\"http://facebook.somosmas.com\"," +
+                "\"linkedInURL\":null," +
+                "\"instagramURL\":null}";
 
-        JSONAssert.assertEquals(expected, response.getBody(), false);
+        JSONAssert.assertEquals(expected, response.getBody(), true);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -50,6 +55,7 @@ public class GetOrganizationDetailsIntegrationTest extends BaseIntegrationTest {
         organization.setImage("http://s3/somosmas.jpg");
         organization.setAddress("Street 1234");
         organization.setPhone(123456);
+        organization.setFacebookURL("http://facebook.somosmas.com");
         organizations.add(organization);
         return organizations;
     }
