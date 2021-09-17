@@ -3,14 +3,17 @@ package com.somosmas.app.util;
 import com.somosmas.app.model.entity.Activity;
 import com.somosmas.app.model.entity.Category;
 import com.somosmas.app.model.entity.Contact;
+import com.somosmas.app.model.entity.News;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.Slide;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.ContactRequest;
+import com.somosmas.app.model.request.NewsRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
+import com.somosmas.app.model.response.NewsResponse;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.model.response.SlideResponse;
@@ -83,11 +86,19 @@ public class ConvertUtil {
         }
         return responses;
     }
-
-    public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType) {
-        return input.stream().map(i -> modelMapper.map(i, destinationType)).collect(Collectors.toList());
+	
+	public static News convertToEntity(NewsRequest request) {
+		return map(request,News.class);
+	}
+	
+	public static NewsResponse convertToDto(News news) {
+		return map(news, NewsResponse.class);
+	}
+	
+    public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
+        return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
     }
-
+ 
     private static <D> D map(Object source, Class<D> destinationType) {
         if (source == null) {
             return null;
@@ -95,6 +106,5 @@ public class ConvertUtil {
 
         return modelMapper.map(source, destinationType);
     }
-
 
 }
