@@ -61,19 +61,16 @@ public class CategoryServiceImpl implements ICategoryService {
                 MessageFormat.format(CATEGORY_ID_NOT_FOUND, id)));
         
         Category category = ConvertUtil.convertToEntity(categoryRequest);
-        
         category.setIdCategory(id);
-        
         category = categoryRepository.save(category);
-        
         return ConvertUtil.convertToDto(category);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public CategoryResponse findByIdCategory(Long idCategory) {
-        Category category = categoryRepository.findByIdCategory(idCategory)
-                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(CATEGORY_ID_NOT_FOUND, idCategory)));
+    public CategoryResponse findBy(Long id) {
+        Category category = categoryRepository.findByIdCategory(id)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(CATEGORY_ID_NOT_FOUND, id)));
 
         return ConvertUtil.convertToDto(category);
     }

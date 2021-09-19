@@ -33,14 +33,14 @@ public class CategoryController {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> delete(@PathVariable("id") Long idCategory) {
-        categoryService.delete(idCategory);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        categoryService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findByIdCategory(@PathVariable Long idCategory) {
-        return new ResponseEntity<>(categoryService.findByIdCategory(idCategory), HttpStatus.OK);
+    public ResponseEntity<?> findBy(@PathVariable Long id) {
+        return new ResponseEntity<>(categoryService.findBy(id), HttpStatus.OK);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

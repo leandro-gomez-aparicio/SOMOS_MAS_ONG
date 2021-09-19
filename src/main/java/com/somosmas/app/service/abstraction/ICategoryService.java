@@ -15,7 +15,7 @@ public interface ICategoryService {
     
     CategoryResponse update(CategoryRequest category, Long id);
 
-    CategoryResponse findByIdCategory(Long idCategory);
+    CategoryResponse findBy(Long id);
 
     ListCategoryResponse getCategoryName();
 
