@@ -49,6 +49,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         organization.setAboutUsText(updateOrganizationRequest.getAboutUsText());
         organization.setEmail(updateOrganizationRequest.getEmail());
         organization.setTimestamp(TimestampUtil.getCurrentTime());
+        organization.setSoftDelete(false);
         return ConvertUtil.convertToDtoUpdate(organizationRepository.save(organization));
     }
 

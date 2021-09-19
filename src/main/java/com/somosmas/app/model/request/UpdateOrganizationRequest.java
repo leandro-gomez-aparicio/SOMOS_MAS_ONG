@@ -34,30 +34,8 @@ public class UpdateOrganizationRequest {
     
     private String instagramURL;
 
-	private Timestamp timestamp;
-
-	private Boolean softDelete;
-
 	public UpdateOrganizationRequest() {
 		super();
-	}
-
-	public UpdateOrganizationRequest(Long idOrganization, String name, String image, String address, Integer phone,
-			String email, String welcomeText, String aboutUsText, String facebookURL, String linkedInURL, String instagramURL, Timestamp timestamp, Boolean softDelete) {
-		super();
-		this.idOrganization = idOrganization;
-		this.name = name;
-		this.image = image;
-		this.address = address;
-		this.phone = phone;
-		this.email = email;
-		this.welcomeText = welcomeText;
-		this.aboutUsText = aboutUsText;
-		this.facebookURL = facebookURL;
-		this.linkedInURL = linkedInURL;
-		this.instagramURL = instagramURL;
-		this.timestamp = timestamp;
-		this.softDelete = softDelete;
 	}
 
 	public Long getIdOrganization() {
@@ -148,21 +126,4 @@ public class UpdateOrganizationRequest {
 		this.instagramURL = instagramURL;
 	}
 
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public Boolean getSoftDelete() {
-		return softDelete;
-	}
-
-	public void setSoftDelete(Boolean softDelete) {
-		this.softDelete = softDelete;
-	}
-	
-	
 }
