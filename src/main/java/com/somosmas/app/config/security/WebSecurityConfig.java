@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @EnableWebSecurity
 @Configuration
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
@@ -42,9 +41,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers( "/auth/**", "/register", "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/news", "/activities", "/organization/public", "/slides").permitAll()
-                .antMatchers("/activities/**", "/categories/**", "/news/**", "/users/**", "/slides/**").hasRole("ADMIN")
+                .antMatchers( "/auth/**",
+                        "/register",
+                        "/login").permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "/news",
+                        "/activities",
+                        "/organization/public").permitAll()
+                .antMatchers("/activities/**",
+                        "/categories/**",
+                        "/news/**",
+                        "/users/**",
+                        "/slides",
+                        "/slides/**",
+                        "/testimonials",
+                        "/testimonials/**").hasRole("ADMIN")
                 .anyRequest().hasAnyRole("ADMIN","USER");
     }
 
