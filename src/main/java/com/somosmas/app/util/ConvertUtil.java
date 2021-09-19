@@ -61,6 +61,10 @@ public class ConvertUtil {
     public static CategoryResponse convertToDto(Category category) {
         return map(category, CategoryResponse.class);
     }
+    
+    public static NewsResponse convertToDto(News news) {
+        return map(news, NewsResponse.class);
+    }
 
     public static Organization convertToEntity(UpdateOrganizationRequest request) {
         return map(request, Organization.class);
@@ -94,10 +98,6 @@ public class ConvertUtil {
 	
 	public static News convertToEntity(CreateNewsRequest request) {
 		return map(request,News.class);
-	}
-	
-	public static NewsResponse convertToDto(News news) {
-		return map(news, NewsResponse.class);
 	}
 	
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){

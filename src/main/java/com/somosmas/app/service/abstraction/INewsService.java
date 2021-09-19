@@ -9,8 +9,10 @@ public interface INewsService {
 
     void delete(Long id);
 
+    NewsResponse findBy(Long id);
+
     NewsResponse update(NewsRequest news, Long id);
-    
+
     void create(CreateNewsRequest newsRequest) throws NewsAlreadyExistException;
 
 }

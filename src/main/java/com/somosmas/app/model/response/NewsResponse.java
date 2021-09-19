@@ -17,18 +17,6 @@ public class NewsResponse {
     private CategoryResponse category;
 
     public NewsResponse() {
-        super();
-    }
-
-    public NewsResponse(Long idNews, String name, String content, String image, Timestamp timestamp, Boolean softDelete,
-                        CategoryResponse category) {
-        super();
-        this.idNews = idNews;
-        this.name = name;
-        this.content = content;
-        this.image = image;
-        this.timestamp = timestamp;
-        this.category = category;
     }
 
     public Long getIdNews() {
