@@ -24,8 +24,8 @@ public class SlideController {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> delete(@PathVariable("id") Long idSlide) {
-        slideService.delete(idSlide);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        slideService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
