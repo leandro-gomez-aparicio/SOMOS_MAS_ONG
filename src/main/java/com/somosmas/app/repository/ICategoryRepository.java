@@ -15,4 +15,6 @@ public interface ICategoryRepository extends JpaRepository<Category, Long> {
     @Transactional(readOnly = true)
     Optional<Category> findByIdCategory(Long idCategory);
 
+	Optional<Category> findOneByName(String name);
+
 }

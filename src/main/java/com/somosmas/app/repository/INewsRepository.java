@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface INewsRepository extends JpaRepository<News, Long> {
 
+	boolean existsByName(String name);
+
 }

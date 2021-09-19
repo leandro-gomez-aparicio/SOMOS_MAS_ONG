@@ -10,6 +10,7 @@ import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.ContactRequest;
+import com.somosmas.app.model.request.CreateNewsRequest;
 import com.somosmas.app.model.request.NewsRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
@@ -88,6 +89,10 @@ public class ConvertUtil {
     }
 	
 	public static News convertToEntity(NewsRequest request) {
+		return map(request,News.class);
+	}
+	
+	public static News convertToEntity(CreateNewsRequest request) {
 		return map(request,News.class);
 	}
 	
