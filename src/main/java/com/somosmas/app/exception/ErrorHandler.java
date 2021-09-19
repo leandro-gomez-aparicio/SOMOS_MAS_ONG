@@ -1,5 +1,7 @@
 package com.somosmas.app.exception;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.somosmas.app.exception.custom.ContactAlreadyExistException;
 import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import org.slf4j.Logger;
@@ -12,7 +14,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -22,6 +26,9 @@ public class ErrorHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
     private static final String INVALID_CREDENTIALS_ERROR_MESSAGE = "Invalid credentials.";
     private static final String VALIDATIONS_ERROR_MESSAGE = "Validation error.";
+    private static final String CREDENTIAL_AWS_ERROR_MESSAGE = "AWS Credentials error, please check it.";
+    private static final String SDK_ERROR_MESSAGE = "SDKClientException error, please check it.";
+    private static final String IO_EXCEPTION_ERROR_MESSAGE = "IOException error.";
 
     @ExceptionHandler(value = UserAlreadyExistException.class)
     public ResponseEntity<Object> userAlreadyExistException(HttpServletRequest request, UserAlreadyExistException exception) {
@@ -46,14 +53,15 @@ public class ErrorHandler {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Object> constraintViolationException(HttpServletRequest request, MethodArgumentNotValidException exception) {
-        BindingResult result=exception.getBindingResult();
-        List<FieldError> fieldErrors=result.getFieldErrors();
+        BindingResult result = exception.getBindingResult();
+        List<FieldError> fieldErrors = result.getFieldErrors();
         ErrorInfo errorInfo = new ErrorInfo(VALIDATIONS_ERROR_MESSAGE, HttpStatus.BAD_REQUEST.value(), request.getRequestURI());
-        for(FieldError fieldError:fieldErrors){
+        for (FieldError fieldError : fieldErrors) {
             errorInfo.addFieldError(fieldError);
         }
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(value = ContactAlreadyExistException.class)
     public ResponseEntity<Object> contactAlreadyExistException(HttpServletRequest request, ContactAlreadyExistException exception) {
         // return error info object with standard json
@@ -68,6 +76,28 @@ public class ErrorHandler {
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(value = IOException.class)
+    public ResponseEntity<Object> handleException(HttpServletRequest request, IOException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(IO_EXCEPTION_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI());
+        LOGGER.error(exception.getMessage());
+        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-    
+    @ExceptionHandler(value = AmazonServiceException.class)
+    public ResponseEntity<Object> handleException(HttpServletRequest request, AmazonServiceException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(CREDENTIAL_AWS_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI());
+        LOGGER.error(exception.getErrorCode() + ": " + exception.getMessage());
+        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = SdkClientException.class)
+    public ResponseEntity<Object> handleException(HttpServletRequest request, SdkClientException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(SDK_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI());
+        LOGGER.error(exception.getMessage());
+        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
