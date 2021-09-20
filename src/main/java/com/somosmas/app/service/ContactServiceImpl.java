@@ -30,7 +30,7 @@ public class ContactServiceImpl implements IContactService {
 
     @Override
     public ListContactResponse list() {
-        List<Contact> contacts = contactRepository.findAll();
+        List<Contact> contacts = contactRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse();
         ListContactResponse response = new ListContactResponse();
         if (contacts.isEmpty()) {
             return response;
