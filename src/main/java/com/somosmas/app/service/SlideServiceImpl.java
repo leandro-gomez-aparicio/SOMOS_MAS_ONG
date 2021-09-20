@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SlideServiceImpl implements ISlideService {
@@ -39,19 +40,24 @@ public class SlideServiceImpl implements ISlideService {
             slidesResponses.add(slideResponse);
         }
 
-        response.setSlides(slidesResponses);
+        response.setSlides(sortBySlideOrder(slidesResponses));
         return response;
     }
 
     @Override
-    public Optional<Slide> findById(Long id) {
-        return slideRepository.findById(id);
+    public void delete(Long id) {
+        getSlide(id);
+        slideRepository.deleteById(id);
     }
 
-    @Override
-    public void delete(Long id) {
-        slideRepository.findById(id).orElseThrow(() ->
-                new NoSuchElementException(MessageFormat.format(SLIDE_ID_NOT_FOUND, id)));
-        slideRepository.deleteById(id);
+    private Slide getSlide(Long id) {
+        return slideRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(SLIDE_ID_NOT_FOUND, id)));
+    }
+
+    private List<SlideResponse> sortBySlideOrder(List<SlideResponse> slidesResponses) {
+        return slidesResponses.stream()
+                .sorted(Comparator.comparing(SlideResponse::getSlideOrder))
+                .collect(Collectors.toList());
     }
 }

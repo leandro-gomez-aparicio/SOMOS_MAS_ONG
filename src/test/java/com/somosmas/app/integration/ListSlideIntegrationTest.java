@@ -38,21 +38,28 @@ public class ListSlideIntegrationTest extends BaseIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/slides"), HttpMethod.GET, entity, String.class);
 
-        String expected = "{\"slides\":[{\"imageUrl\":\"slide\",\"slideOrder\":1}]}";
+        String expected = "{\"slides\":" +
+                "[{\"imageUrl\":\"slide\",\"slideOrder\":1}," +
+                "{\"imageUrl\":\"slide\",\"slideOrder\":2}]}";
 
-        JSONAssert.assertEquals(expected, response.getBody(), false);
+        JSONAssert.assertEquals(expected, response.getBody(), true);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     private List<Slide> stubSlides() {
         List<Slide> slides = new ArrayList<>();
+        slides.add(buildSlide(2L, 2));
+        slides.add(buildSlide(1L, 1));
+        return slides;
+    }
+
+    private Slide buildSlide(Long id, Integer slideOrder) {
         Slide slide = new Slide();
-        slide.setIdSlide(1L);
+        slide.setIdSlide(id);
         slide.setImageUrl("slide");
         slide.setText("slide");
-        slide.setSlideOrder(1);
-        slides.add(slide);
-        return slides;
+        slide.setSlideOrder(slideOrder);
+        return slide;
     }
 
 }
