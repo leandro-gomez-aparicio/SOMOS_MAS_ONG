@@ -42,7 +42,7 @@ public class ListUserIntegrationTest extends BaseIntegrationTest {
                 + "\"lastName\":\"user\", \"photo\":photo}]";
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(expected, response.getBody(), false);
+        JSONAssert.assertEquals(expected, response.getBody(), true);
     }
 
     private List<User> stubUser() {
