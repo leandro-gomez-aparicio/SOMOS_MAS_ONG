@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-   @Autowired
+    @Autowired
     IUserService userService;
 
     @Autowired
@@ -34,8 +34,9 @@ public class AuthenticationController {
         return new ResponseEntity<>(loginService.authentication(userDetailsRequest), HttpStatus.OK);
     }
 
-    @GetMapping(value ="/me", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDetailsResponse> getAuthenticatedUserInformation(@RequestHeader(name = "Authorization", required = true) String token) {
-        return ResponseEntity.ok(userService.getUserDetailsBy(token));
+    @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDetailsResponse> getAuthenticatedUserInformation(
+            @RequestHeader(name = "Authorization", required = true) String authorizationHeader) {
+        return ResponseEntity.ok(userService.getUserDetailsBy(authorizationHeader));
     }
 }

@@ -34,10 +34,10 @@ public class JwtUtil {
 
     public String generateToken(UserDetailsResponse login) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, login.getEmail(),login.getRole());
+        return createToken(claims, login.getEmail(), login.getRole());
     }
 
-    private String createToken(Map<String, Object> claims, String subject,String role) {
+    private String createToken(Map<String, Object> claims, String subject, String role) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList(role);
 
@@ -49,7 +49,7 @@ public class JwtUtil {
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))//1 hour
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))//1 hour
                 .signWith(SignatureAlgorithm.HS512,
                         SECRET_KEY.getBytes()).compact();
         return String.format(BEARER_TOKEN, token);

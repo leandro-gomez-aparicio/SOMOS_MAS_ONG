@@ -4,8 +4,8 @@ import com.somosmas.app.config.security.RoleType;
 import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.UserDetailsRequest;
-import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.model.response.ListUserResponse;
+import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IRoleRepository;
 import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.service.abstraction.IUserService;
@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
 
     private static final String USER_ID_NOT_FOUND = "User ID: {0} not found.";
     private static final String USER_NOT_FOUND_ERROR_MESSAGE = "User not found: {0}";
+    private static final String BEARER_PART = "Bearer ";
+    private static final String EMPTY = "";
 
     @Autowired
     private IUserRepository userRepository;
@@ -48,11 +50,6 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
                 new NoSuchElementException(MessageFormat.format(USER_ID_NOT_FOUND, id)));
         user.setSoftDelete(true);
         userRepository.save(user);
-    }
-
-    @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
     }
 
     @Override
@@ -84,15 +81,17 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
 
     @Override
     public ListUserResponse listActiveUsers() {
-        List<UserDetailsResponse> list= ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse());
-        ListUserResponse listUserResponse=new ListUserResponse();
+        List<UserDetailsResponse> list = ConvertUtil.convertToDto(userRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse());
+        ListUserResponse listUserResponse = new ListUserResponse();
         listUserResponse.setUsers(list);
         return listUserResponse;
     }
 
     @Override
-    public UserDetailsResponse getUserDetailsBy(String token) throws UsernameNotFoundException {
-        String userEmail = jwtUtil.extractUserEmail(token);
+    public UserDetailsResponse getUserDetailsBy(String authorizationHeader) throws UsernameNotFoundException {
+        String jwtToken = authorizationHeader.replace(BEARER_PART, EMPTY);
+
+        String userEmail = jwtUtil.extractUserEmail(jwtToken);
         Optional<User> userEntity = userRepository.findByEmail(userEmail);
         if (userEntity.isEmpty()) {
             throw new UsernameNotFoundException(MessageFormat.format(USER_NOT_FOUND_ERROR_MESSAGE, userEmail));
@@ -104,18 +103,18 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         userResponse.setPhoto(userEntity.get().getPhoto());
         return userResponse;
     }
-    
-    public UserDetailsResponse update(Long id, UserDetailsRequest userRequest) throws NoSuchElementException{
-		userRepository.findById(id).orElseThrow(() -> 
-		new NoSuchElementException(MessageFormat.format(USER_ID_NOT_FOUND, id)));
-		
-		User user = ConvertUtil.convertToEntity(userRequest);
-		user.setPassword(bCryptPasswordEncoder.encode(userRequest.getPassword()));
-		user.setTimestamp(TimestampUtil.getCurrentTime());
-		user.setIdUser(id);
-		
-		userRepository.save(user);
-		return ConvertUtil.convertToDto(user);
+
+    public UserDetailsResponse update(Long id, UserDetailsRequest userRequest) throws NoSuchElementException {
+        userRepository.findById(id).orElseThrow(() ->
+                new NoSuchElementException(MessageFormat.format(USER_ID_NOT_FOUND, id)));
+
+        User user = ConvertUtil.convertToEntity(userRequest);
+        user.setPassword(bCryptPasswordEncoder.encode(userRequest.getPassword()));
+        user.setTimestamp(TimestampUtil.getCurrentTime());
+        user.setIdUser(id);
+
+        userRepository.save(user);
+        return ConvertUtil.convertToDto(user);
     }
 
 }
