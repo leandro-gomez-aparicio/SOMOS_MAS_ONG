@@ -1,8 +1,10 @@
 package com.somosmas.app.service;
 
 import com.somosmas.app.model.entity.Organization;
+import com.somosmas.app.model.request.SocialMediaRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.response.OrganizationResponse;
+import com.somosmas.app.model.response.SocialMediaResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
 import com.somosmas.app.service.abstraction.IOrganizationService;
@@ -32,7 +34,13 @@ public class OrganizationServiceImpl implements IOrganizationService {
             return null;
         }
 
-        return ConvertUtil.convertToDto(organizations.get(0));
+        Organization organization = organizations.get(0);
+        OrganizationResponse organizationResponse = ConvertUtil.convertToDto(organization);
+        organizationResponse.setSocialMedia(
+                new SocialMediaResponse(organization.getFacebookURL(),
+                        organization.getInstagramURL(),
+                        organization.getLinkedInURL()));
+        return organizationResponse;
     }
 
     @Override
@@ -50,6 +58,10 @@ public class OrganizationServiceImpl implements IOrganizationService {
         organization.setEmail(updateOrganizationRequest.getEmail());
         organization.setTimestamp(TimestampUtil.getCurrentTime());
         organization.setSoftDelete(false);
+        SocialMediaRequest socialMediaRequest = updateOrganizationRequest.getSocialMedia();
+        organization.setFacebookURL(socialMediaRequest.getFacebookURL());
+        organization.setInstagramURL(socialMediaRequest.getInstagramURL());
+        organization.setLinkedInURL(socialMediaRequest.getLinkedInURL());
         return ConvertUtil.convertToDtoUpdate(organizationRepository.save(organization));
     }
 

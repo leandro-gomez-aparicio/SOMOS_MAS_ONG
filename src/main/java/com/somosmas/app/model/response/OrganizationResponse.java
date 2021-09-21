@@ -6,9 +6,7 @@ public class OrganizationResponse {
 	private String image;
 	private String address;
 	private Integer phone;
-	private String facebookURL;
-    private String linkedInURL;
-    private String instagramURL;
+	private SocialMediaResponse socialMedia;
 
 	public String getName() {
 		return name;
@@ -42,27 +40,11 @@ public class OrganizationResponse {
 		this.phone = phone;
 	}
 	
-	public String getFacebookURL() {
-		return facebookURL;
+	public SocialMediaResponse getSocialMedia() {
+		return socialMedia;
 	}
 
-	public void setFacebookURL(String facebookURL) {
-		this.facebookURL = facebookURL;
-	}
-
-	public String getLinkedInURL() {
-		return linkedInURL;
-	}
-
-	public void setLinkedInURL(String linkedInURL) {
-		this.linkedInURL = linkedInURL;
-	}
-
-	public String getInstagramURL() {
-		return instagramURL;
-	}
-
-	public void setInstagramURL(String instagramURL) {
-		this.instagramURL = instagramURL;
+	public void setSocialMedia(SocialMediaResponse socialMedia) {
+		this.socialMedia = socialMedia;
 	}
 }

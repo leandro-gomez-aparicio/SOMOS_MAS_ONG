@@ -39,9 +39,10 @@ public class GetOrganizationDetailsIntegrationTest extends BaseIntegrationTest {
                 "\"image\":\"http://s3/somosmas.jpg\"," +
                 "\"address\":\"Street 1234\"," +
                 "\"phone\":123456," +
-                "\"facebookURL\":\"http://facebook.somosmas.com\"," +
-                "\"linkedInURL\":null," +
-                "\"instagramURL\":null}";
+                "\"socialMedia\":" +
+                    "{\"facebookURL\":\"http://facebook.somosmas.com\"," +
+                    "\"linkedInURL\":null," +
+                    "\"instagramURL\":null}}";
 
         JSONAssert.assertEquals(expected, response.getBody(), true);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());

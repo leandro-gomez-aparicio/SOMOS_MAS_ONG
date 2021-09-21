@@ -19,37 +19,14 @@ public class UpdateOrganizationResponse {
 	private String welcomeText;
 	
 	private String aboutUsText;
-	
-	private String facebookURL;
 
-	private String linkedInURL;
-    
-    private String instagramURL;
+	private SocialMediaResponse socialMedia;
 	
 	private Timestamp timestamp;
 	
 	private Boolean softDelete;
 	
 	public UpdateOrganizationResponse() {
-		super();
-	}
-
-	public UpdateOrganizationResponse(Long idOrganization, String name, String image, String address, Integer phone,
-			String email, String welcomeText, String aboutUsText, String facebookURL, String linkedInURL, String instagramURL, Timestamp timestamp, Boolean softDelete) {
-		super();
-		this.idOrganization = idOrganization;
-		this.name = name;
-		this.image = image;
-		this.address = address;
-		this.phone = phone;
-		this.email = email;
-		this.welcomeText = welcomeText;
-		this.aboutUsText = aboutUsText;
-		this.facebookURL = facebookURL;
-		this.linkedInURL = linkedInURL;
-		this.instagramURL = instagramURL;
-		this.timestamp = timestamp;
-		this.softDelete = softDelete;
 	}
 
 	public Long getIdOrganization() {
@@ -116,28 +93,12 @@ public class UpdateOrganizationResponse {
 		this.aboutUsText = aboutUsText;
 	}
 
-    public String getFacebookURL() {
-		return facebookURL;
+	public SocialMediaResponse getSocialMedia() {
+		return socialMedia;
 	}
 
-	public void setFacebookURL(String facebookURL) {
-		this.facebookURL = facebookURL;
-	}
-
-	public String getLinkedInURL() {
-		return linkedInURL;
-	}
-
-	public void setLinkedInURL(String linkedInURL) {
-		this.linkedInURL = linkedInURL;
-	}
-
-	public String getInstagramURL() {
-		return instagramURL;
-	}
-
-	public void setInstagramURL(String instagramURL) {
-		this.instagramURL = instagramURL;
+	public void setSocialMedia(SocialMediaResponse socialMedia) {
+		this.socialMedia = socialMedia;
 	}
 	
 	public Timestamp getTimestamp() {

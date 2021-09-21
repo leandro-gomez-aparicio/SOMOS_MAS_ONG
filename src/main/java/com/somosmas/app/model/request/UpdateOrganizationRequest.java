@@ -1,129 +1,106 @@
 package com.somosmas.app.model.request;
 
-import java.sql.Timestamp;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 public class UpdateOrganizationRequest {
 
-	private Long idOrganization;
+    private Long idOrganization;
 
-	@NotEmpty(message = "No puede ser Null")
-	private String name;
+    @NotEmpty(message = "Cannot be null.")
+    private String name;
 
-	@NotEmpty(message = "No puede ser Null")
-	private String image;
+    @NotEmpty(message = "Cannot be null.")
+    private String image;
 
-	private String address;
+    private String address;
 
-	private Integer phone;
+    private Integer phone;
 
-	@Email
-	@NotEmpty(message = "No puede ser Null")
-	private String email;
+    @Email
+    @NotEmpty(message = "Cannot be null.")
+    private String email;
 
-	@NotEmpty(message = "No puede ser Null")
-	private String welcomeText;
+    @NotEmpty(message = "Cannot be null.")
+    private String welcomeText;
 
-	private String aboutUsText;
-	
-    private String facebookURL;
-    
-    private String linkedInURL;
-    
-    private String instagramURL;
+    private String aboutUsText;
 
-	public UpdateOrganizationRequest() {
-		super();
-	}
+    private SocialMediaRequest socialMedia;
 
-	public Long getIdOrganization() {
-		return idOrganization;
-	}
+    public UpdateOrganizationRequest() {
+        super();
+    }
 
-	public void setIdOrganization(Long idOrganization) {
-		this.idOrganization = idOrganization;
-	}
+    public Long getIdOrganization() {
+        return idOrganization;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setIdOrganization(Long idOrganization) {
+        this.idOrganization = idOrganization;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public Integer getPhone() {
-		return phone;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setPhone(Integer phone) {
-		this.phone = phone;
-	}
+    public Integer getPhone() {
+        return phone;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getWelcomeText() {
-		return welcomeText;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setWelcomeText(String welcomeText) {
-		this.welcomeText = welcomeText;
-	}
+    public String getWelcomeText() {
+        return welcomeText;
+    }
 
-	public String getAboutUsText() {
-		return aboutUsText;
-	}
+    public void setWelcomeText(String welcomeText) {
+        this.welcomeText = welcomeText;
+    }
 
-	public void setAboutUsText(String aboutUsText) {
-		this.aboutUsText = aboutUsText;
-	}
-	
-	public String getFacebookURL() {
-		return facebookURL;
-	}
+    public String getAboutUsText() {
+        return aboutUsText;
+    }
 
-	public void setFacebookURL(String facebookURL) {
-		this.facebookURL = facebookURL;
-	}
+    public void setAboutUsText(String aboutUsText) {
+        this.aboutUsText = aboutUsText;
+    }
 
-	public String getLinkedInURL() {
-		return linkedInURL;
-	}
+    public SocialMediaRequest getSocialMedia() {
+        return socialMedia;
+    }
 
-	public void setLinkedInURL(String linkedInURL) {
-		this.linkedInURL = linkedInURL;
-	}
-
-	public String getInstagramURL() {
-		return instagramURL;
-	}
-
-	public void setInstagramURL(String instagramURL) {
-		this.instagramURL = instagramURL;
-	}
-
+    public void setSocialMedia(SocialMediaRequest socialMedia) {
+        this.socialMedia = socialMedia;
+    }
 }
