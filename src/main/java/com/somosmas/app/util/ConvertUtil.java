@@ -18,6 +18,7 @@ import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.NewsResponse;
 import com.somosmas.app.model.response.CategoryResponse;
+import com.somosmas.app.model.response.MemberResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.model.response.SlideResponse;
 import com.somosmas.app.model.response.SocialMediaResponse;
@@ -100,6 +101,10 @@ public class ConvertUtil {
         return map(slide, SlideResponse.class);
     }
 
+    public static MemberResponse convertToDto(Member request) {
+        return map(request, MemberResponse.class);
+    }
+    
     public static List<UserDetailsResponse> convertToDto(List<User> users) {
         List<UserDetailsResponse> responses = new ArrayList<>();
         for (User user : users) {

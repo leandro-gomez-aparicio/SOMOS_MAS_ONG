@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.somosmas.app.service.abstraction.IMemberService;
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,6 +26,11 @@ public class MemberController {
     public ResponseEntity<?> create(@Valid @RequestBody MemberRequest memberRequest){
         memberService.create(memberRequest);
         return new ResponseEntity<>(memberRequest, HttpStatus.CREATED);
+    }
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMember(){
+        return new ResponseEntity<>(memberService.getMembers(), HttpStatus.OK);
     }
 
 	@DeleteMapping(value="/{idMember}", produces = MediaType.APPLICATION_JSON_VALUE)
