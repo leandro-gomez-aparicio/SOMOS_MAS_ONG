@@ -17,7 +17,7 @@ public class Activity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_member")
+    @Column(name = "id_activity")
     private Long idActivity;
 
     @Column(name = "name", nullable = false)

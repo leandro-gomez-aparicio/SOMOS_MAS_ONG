@@ -17,6 +17,7 @@ import com.somosmas.app.model.request.NewsRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.NewsResponse;
+import com.somosmas.app.model.response.ActivityResponse;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.MemberResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
@@ -122,6 +123,10 @@ public class ConvertUtil {
 	public static News convertToEntity(CreateNewsRequest request) {
 		return map(request,News.class);
 	}
+	
+	public static ActivityResponse convertToDto(Activity activity) {
+        return map(activity, ActivityResponse.class);
+    }
 	
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
         return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
