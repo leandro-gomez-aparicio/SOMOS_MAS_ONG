@@ -1,5 +1,6 @@
 package com.somosmas.app.controller;
 
+import com.somosmas.app.model.request.MemberRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,12 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.somosmas.app.service.abstraction.IMemberService;
+import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/members")
 public class MemberController {
 	@Autowired
 	IMemberService memberService;
+        
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> create(@Valid @RequestBody MemberRequest memberRequest){
+        memberService.create(memberRequest);
+        return new ResponseEntity<>(memberRequest, HttpStatus.CREATED);
+    }
 
 	@DeleteMapping(value="/{idMember}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable("idMember") Long idMember){

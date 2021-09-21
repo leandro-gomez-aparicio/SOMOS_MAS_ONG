@@ -3,6 +3,7 @@ package com.somosmas.app.util;
 import com.somosmas.app.model.entity.Activity;
 import com.somosmas.app.model.entity.Category;
 import com.somosmas.app.model.entity.Contact;
+import com.somosmas.app.model.entity.Member;
 import com.somosmas.app.model.entity.News;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.Slide;
@@ -11,6 +12,7 @@ import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.ContactRequest;
 import com.somosmas.app.model.request.CreateNewsRequest;
+import com.somosmas.app.model.request.MemberRequest;
 import com.somosmas.app.model.request.NewsRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
@@ -48,6 +50,10 @@ public class ConvertUtil {
 
     public static Category convertToEntity(CategoryRequest request) {
         return map(request, Category.class);
+    }
+    
+    public static Member convertToEntity(MemberRequest request) {
+        return map(request, Member.class);
     }
 
     public static OrganizationResponse convertToDto(Organization organization) {
