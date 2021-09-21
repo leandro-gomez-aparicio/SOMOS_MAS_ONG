@@ -17,6 +17,6 @@ public interface ICategoryService {
 
     CategoryResponse findBy(Long id);
 
-    ListCategoryResponse getCategoryName();
+    ListCategoryResponse listCategoryNames();
 
 }

@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public ListCategoryResponse getCategoryName() {
+    public ListCategoryResponse listCategoryNames() {
         List<Category> categories = categoryRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse();
 
         ListCategoryResponse response = new ListCategoryResponse();

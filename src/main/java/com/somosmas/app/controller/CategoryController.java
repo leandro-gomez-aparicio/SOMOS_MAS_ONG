@@ -44,8 +44,8 @@ public class CategoryController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getCategoryName() {
-        return new ResponseEntity<>(categoryService.getCategoryName(), HttpStatus.OK);
+    public ResponseEntity<?> listCategoryNames() {
+        return new ResponseEntity<>(categoryService.listCategoryNames(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
