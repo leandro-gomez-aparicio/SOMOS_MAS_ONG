@@ -20,6 +20,7 @@ import com.somosmas.app.model.response.NewsResponse;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.model.response.SlideResponse;
+import com.somosmas.app.model.response.SocialMediaResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import org.modelmapper.ModelMapper;
@@ -57,11 +58,22 @@ public class ConvertUtil {
     }
 
     public static OrganizationResponse convertToDto(Organization organization) {
-        return map(organization, OrganizationResponse.class);
+        OrganizationResponse organizationResponse = map(organization, OrganizationResponse.class);
+        organizationResponse.setSocialMedia(
+                new SocialMediaResponse(organization.getFacebookURL(),
+                        organization.getInstagramURL(),
+                        organization.getLinkedInURL()));
+        return organizationResponse;
     }
 
     public static UpdateOrganizationResponse convertToDtoUpdate(Organization organization) {
-        return map(organization, UpdateOrganizationResponse.class);
+        UpdateOrganizationResponse updateOrganizationResponse = map(organization, UpdateOrganizationResponse.class);
+        updateOrganizationResponse.setSocialMedia(
+                new SocialMediaResponse(
+                        organization.getFacebookURL(),
+                        organization.getInstagramURL(),
+                        organization.getLinkedInURL()));
+        return updateOrganizationResponse;
     }
 
     public static CategoryResponse convertToDto(Category category) {
