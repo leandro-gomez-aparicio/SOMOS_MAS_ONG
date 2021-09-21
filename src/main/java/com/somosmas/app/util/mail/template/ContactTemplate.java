@@ -16,4 +16,19 @@ public class ContactTemplate implements Serializable {
         this.email = email;
     }
 
+    public ContactTemplate(String name, String email) {
+        this(name,null,email);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
