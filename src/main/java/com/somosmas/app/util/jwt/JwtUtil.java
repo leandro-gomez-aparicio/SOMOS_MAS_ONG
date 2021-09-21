@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +30,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(SECRET_KEY.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token).getBody();
     }
 
     public String generateToken(UserDetailsResponse login) {
@@ -51,7 +52,7 @@ public class JwtUtil {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))//1 hour
                 .signWith(SignatureAlgorithm.HS512,
-                        SECRET_KEY.getBytes()).compact();
+                        SECRET_KEY.getBytes(StandardCharsets.UTF_8)).compact();
         return String.format(BEARER_TOKEN, token);
     }
 
