@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.somosmas.app.model.entity.Testimonials;
+import com.somosmas.app.model.request.TestimonialsRequest;
 import com.somosmas.app.repository.ITestimonialsRepository;
 import com.somosmas.app.service.abstraction.ITestimonialsService;
+import com.somosmas.app.util.ConvertUtil;
+import com.somosmas.app.util.TimestampUtil;
 
 @Service
 public class TestimonialsServiceImpl implements ITestimonialsService {
@@ -25,5 +28,13 @@ public class TestimonialsServiceImpl implements ITestimonialsService {
 		testimonials.setSoftDelete(true);
 		testimonialsRepository.save(testimonials);
 	}
+	
+	@Override
+    public void create(TestimonialsRequest testimonialsRequest) {
+        Testimonials testimonials = ConvertUtil.convertToEntity(testimonialsRequest);
+        testimonials.setTimestamp(TimestampUtil.getCurrentTime());
+        testimonials.setSoftDelete(false);
+        testimonialsRepository.save(testimonials);
+    }
 
 }

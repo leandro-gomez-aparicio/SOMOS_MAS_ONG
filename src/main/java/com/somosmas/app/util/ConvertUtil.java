@@ -7,6 +7,7 @@ import com.somosmas.app.model.entity.Member;
 import com.somosmas.app.model.entity.News;
 import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.Slide;
+import com.somosmas.app.model.entity.Testimonials;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
@@ -14,6 +15,7 @@ import com.somosmas.app.model.request.ContactRequest;
 import com.somosmas.app.model.request.CreateNewsRequest;
 import com.somosmas.app.model.request.MemberRequest;
 import com.somosmas.app.model.request.NewsRequest;
+import com.somosmas.app.model.request.TestimonialsRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.NewsResponse;
@@ -126,6 +128,10 @@ public class ConvertUtil {
 	
 	public static ActivityResponse convertToDto(Activity activity) {
         return map(activity, ActivityResponse.class);
+    }
+	
+	public static Testimonials convertToEntity(TestimonialsRequest request) {
+        return map(request, Testimonials.class);
     }
 	
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
