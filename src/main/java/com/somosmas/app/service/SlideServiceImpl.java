@@ -2,9 +2,12 @@ package com.somosmas.app.service;
 
 import com.somosmas.app.model.entity.Slide;
 import com.somosmas.app.model.response.ListSlideResponse;
+import com.somosmas.app.model.response.SlideDetailsResponse;
 import com.somosmas.app.model.response.SlideResponse;
 import com.somosmas.app.repository.ISlideRepository;
 import com.somosmas.app.service.abstraction.ISlideService;
+import com.somosmas.app.util.ConvertUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,4 +63,10 @@ public class SlideServiceImpl implements ISlideService {
                 .sorted(Comparator.comparing(SlideResponse::getSlideOrder))
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public SlideDetailsResponse findBy(Long id) {
+		return ConvertUtil.convertToDtoDetails(getSlide(id));
+    }
+    
 }

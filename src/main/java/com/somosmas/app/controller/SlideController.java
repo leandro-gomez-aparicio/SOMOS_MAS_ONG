@@ -28,4 +28,9 @@ public class SlideController {
         slideService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findBy(@PathVariable("id") Long id){
+    	return new ResponseEntity<>(slideService.findBy(id), HttpStatus.OK);    	
+    }
 }

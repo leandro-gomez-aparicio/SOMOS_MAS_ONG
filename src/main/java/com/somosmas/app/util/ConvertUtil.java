@@ -23,6 +23,7 @@ import com.somosmas.app.model.response.ActivityResponse;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.model.response.MemberResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
+import com.somosmas.app.model.response.SlideDetailsResponse;
 import com.somosmas.app.model.response.SlideResponse;
 import com.somosmas.app.model.response.SocialMediaResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
@@ -133,6 +134,9 @@ public class ConvertUtil {
 	public static Testimonials convertToEntity(TestimonialsRequest request) {
         return map(request, Testimonials.class);
     }
+	public static SlideDetailsResponse convertToDtoDetails(Slide slide) {
+        return map(slide, SlideDetailsResponse.class);
+	}
 	
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
         return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
