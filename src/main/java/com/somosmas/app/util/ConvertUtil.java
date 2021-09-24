@@ -155,5 +155,4 @@ public class ConvertUtil {
 
         return modelMapper.map(source, destinationType);
     }
-
 }

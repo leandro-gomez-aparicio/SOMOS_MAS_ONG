@@ -1,5 +1,6 @@
 package com.somosmas.app.service.abstraction;
 
+import com.somosmas.app.exception.custom.SendEmailException;
 import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.ListUserResponse;
@@ -15,7 +16,7 @@ public interface IUserService {
 
     UserDetailsResponse getUserDetailsBy(String authorizationHeader);
 
-    UserDetailsResponse register(UserDetailsRequest registerUserRequest) throws UserAlreadyExistException;
+    UserDetailsResponse register(UserDetailsRequest registerUserRequest) throws UserAlreadyExistException, SendEmailException;
 
     UserDetailsResponse update(Long id, UserDetailsRequest userRequest) throws NoSuchElementException;
 }

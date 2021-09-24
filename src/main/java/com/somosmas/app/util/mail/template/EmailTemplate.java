@@ -1,5 +1,6 @@
 package com.somosmas.app.util.mail.template;
 
+import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.util.mail.IContent;
 import com.somosmas.app.util.mail.IEmail;
 
@@ -37,6 +38,18 @@ public class EmailTemplate implements Serializable, IEmail {
         this(null, null, null, subject, fromEmail, contact, content);
     }
 
+    public EmailTemplate(String subject,
+                         Organization organization,
+                         ContactTemplate contact,
+                         ContentTemplate content) {
+        this(organization.getImage(),
+                organization.getName(),
+                organization.getWelcomeText(),
+                subject,
+                organization.getEmail(),
+                contact,
+                content);
+    }
     @Override
     public String getTo() {
         return contact.getEmail();
