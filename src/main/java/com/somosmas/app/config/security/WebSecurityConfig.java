@@ -57,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/testimonials",
                         "/testimonials/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,
-                        "/members").hasRole("ADMIN")
+                        "/members",
+                        "/comments").hasRole("ADMIN")
                 .antMatchers("/comments").hasRole("USER")
                 .anyRequest().hasAnyRole("ADMIN","USER");
     }

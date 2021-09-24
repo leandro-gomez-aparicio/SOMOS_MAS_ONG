@@ -9,6 +9,7 @@ import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.entity.Slide;
 import com.somosmas.app.model.entity.Testimonials;
 import com.somosmas.app.model.entity.User;
+import com.somosmas.app.model.entity.Comment;
 import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.request.ContactRequest;
@@ -21,6 +22,7 @@ import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.NewsResponse;
 import com.somosmas.app.model.response.ActivityResponse;
 import com.somosmas.app.model.response.CategoryResponse;
+import com.somosmas.app.model.response.CommentResponse;
 import com.somosmas.app.model.response.MemberResponse;
 import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.model.response.SlideDetailsResponse;
@@ -83,6 +85,10 @@ public class ConvertUtil {
 
     public static CategoryResponse convertToDto(Category category) {
         return map(category, CategoryResponse.class);
+    }
+    
+    public static CommentResponse convertToDto(Comment comment) {
+        return map(comment, CommentResponse.class);
     }
     
     public static NewsResponse convertToDto(News news) {

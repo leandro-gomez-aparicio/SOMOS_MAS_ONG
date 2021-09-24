@@ -1,5 +1,6 @@
 package com.somosmas.app.model.entity;
 
+import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +28,21 @@ public class Comment {
 
 	@Column(nullable = false, name = "body")
 	private String body;
+        
+        @Column(name = "timestamp")
+        private Timestamp timestamp;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "news_id")
 	private News news;
+        
+        public Comment(String body) {
+            this.body = body;
+        }
+        
+        public Comment() {
+
+        }
 
 	public Long getIdComment() {
 		return idComment;
@@ -63,5 +75,13 @@ public class Comment {
 	public void setNews(News news) {
 		this.news = news;
 	}
+
+        public Timestamp getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(Timestamp timestamp) {
+            this.timestamp = timestamp;
+        }
 	
 }
