@@ -18,9 +18,9 @@ import java.util.UUID;
 @Service
 public class AmazonServiceImpl {
 
-    private static final String EMPTY_FILE_URL = "";
     private static final String DEFAULT_FILE_NAME = "default-image-name";
     private static final String FILE_NAME_PATTERN = "{0}-{1}";
+    private static final String DESTINATION_URL = "destination-url";
 
     @Autowired
     private AmazonS3 s3client;
@@ -28,31 +28,30 @@ public class AmazonServiceImpl {
     @Autowired
     private AmazonS3Config amazonConfig;
 
-    private String generateFileName(MultipartFile multiPart) {
+    public Map<String, String> uploadFile(MultipartFile multipartFile) throws IOException {
+        String fileUrl = uploadFile(multipartFile.getContentType(), multipartFile.getOriginalFilename(), multipartFile.getInputStream());
+        return Map.of(DESTINATION_URL, fileUrl);
+    }
+
+    private String getFileNameOrDefault(String fileName) {
         UUID uuid = UUID.randomUUID();
-        String fileName = multiPart.getOriginalFilename();
         if (fileName == null) {
             fileName = DEFAULT_FILE_NAME;
         }
         return MessageFormat.format(FILE_NAME_PATTERN, uuid, fileName);
     }
 
-    private void uploadFileTos3bucket(String fileName, InputStream file, String contentType) {
-        ObjectMetadata metaData = new ObjectMetadata();
-        metaData.setContentType(contentType);
-        s3client.putObject(new PutObjectRequest(amazonConfig.getBucketName(), fileName, file, metaData)
+    private void uploadFileInBucket(String fileName, InputStream inputStream, String contentType) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(contentType);
+        s3client.putObject(new PutObjectRequest(amazonConfig.getBucketName(), fileName, inputStream, metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
-    public Map<String, String> uploadFile(MultipartFile multipartFile) throws IOException {
-        String fileUrl = EMPTY_FILE_URL;
-
-        String fileName = generateFileName(multipartFile);
-        String contentType = multipartFile.getContentType();
-
-        uploadFileTos3bucket(fileName, multipartFile.getInputStream(), contentType);
-        fileUrl = s3client.getUrl(amazonConfig.getBucketName(), fileName).toString();
-        return Map.of("destination-url", fileUrl);
+    public String uploadFile(String contentType, String fileName, InputStream inputStream) {
+        String fileNameOrDefault = getFileNameOrDefault(fileName);
+        uploadFileInBucket(fileNameOrDefault, inputStream, contentType);
+        return s3client.getUrl(amazonConfig.getBucketName(), fileNameOrDefault).toString();
     }
 
 }
