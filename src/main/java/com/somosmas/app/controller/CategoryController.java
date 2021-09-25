@@ -5,6 +5,7 @@ import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.response.CategoryResponse;
 import com.somosmas.app.service.abstraction.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +44,10 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.findBy(id), HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> listCategoryNames() {
-        return new ResponseEntity<>(categoryService.listCategoryNames(), HttpStatus.OK);
+    @GetMapping(value = "/page/{page}" ,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> listCategoryNames(@PathVariable int page)
+    		throws NotFoundException {
+        return new ResponseEntity<>(categoryService.listCategoryNames(page), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

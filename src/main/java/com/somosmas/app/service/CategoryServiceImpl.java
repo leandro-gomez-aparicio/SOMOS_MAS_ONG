@@ -9,7 +9,13 @@ import com.somosmas.app.repository.ICategoryRepository;
 import com.somosmas.app.service.abstraction.ICategoryService;
 import com.somosmas.app.util.ConvertUtil;
 import com.somosmas.app.util.TimestampUtil;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +31,9 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private ICategoryRepository categoryRepository;
+    
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public void delete(Long id) throws NoSuchElementException {
@@ -34,24 +43,19 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public ListCategoryResponse listCategoryNames() {
-        List<Category> categories = categoryRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse();
-
-        ListCategoryResponse response = new ListCategoryResponse();
-        if (categories.isEmpty()) {
-            return response;
-        }
-
-        List<CategoryResponse> categoriesResponses = new ArrayList<>();
-        for (Category category : categories) {
-            CategoryResponse categoryResponse = new CategoryResponse();
-            categoryResponse.setName(category.getName());
-            categoriesResponses.add(categoryResponse);
-        }
-
-        response.setCategories(categoriesResponses);
-        return response;
-
+	@Transactional(readOnly = true)
+	public Page<ListCategoryResponse> listCategoryNames(Integer page) throws NotFoundException {
+		ConvertUtil modelToDto= new ConvertUtil();
+		Pageable pagina = PageRequest.of(page, 2);
+		   Page<Category> categories = categoryRepository.findBySoftDeleteIsNullOrSoftDeleteIsFalse(pagina);
+		   if(categories.getTotalPages() <= pagina.getPageNumber() || categories.isEmpty() ){
+		      throw new NotFoundException();
+		   }
+	        return categories.map(this::modelToDTO);	 
+	}
+	
+    private ListCategoryResponse modelToDTO(Category category) {
+        return modelMapper.map(category, ListCategoryResponse.class);
     }
 
     @Override

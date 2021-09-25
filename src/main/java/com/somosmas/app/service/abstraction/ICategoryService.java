@@ -1,6 +1,9 @@
 package com.somosmas.app.service.abstraction;
 
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+
 import com.somosmas.app.exception.custom.CategoryAlreadyExistException;
 import com.somosmas.app.model.request.CategoryRequest;
 import com.somosmas.app.model.response.CategoryResponse;
@@ -17,6 +20,6 @@ public interface ICategoryService {
 
     CategoryResponse findBy(Long id);
 
-    ListCategoryResponse listCategoryNames();
+    Page<ListCategoryResponse> listCategoryNames(Integer page)throws NotFoundException;
 
 }
