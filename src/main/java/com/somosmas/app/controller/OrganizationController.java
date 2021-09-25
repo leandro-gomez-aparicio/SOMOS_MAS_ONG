@@ -30,6 +30,6 @@ public class OrganizationController {
     @PutMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateOrganization(@Valid @RequestBody UpdateOrganizationRequest organization) {
         UpdateOrganizationResponse organizationUpdate = organizationService.updateOrganization(organization);
-        return new ResponseEntity<>(organizationUpdate, HttpStatus.CREATED);
+        return new ResponseEntity<>(organizationUpdate, HttpStatus.OK);
     }
 }
