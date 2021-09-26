@@ -36,8 +36,6 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
 
     private static final String USER_ID_NOT_FOUND = "User ID: {0} not found.";
     private static final String USER_NOT_FOUND_ERROR_MESSAGE = "User not found: {0}";
-    private static final String BEARER_PART = "Bearer ";
-    private static final String EMPTY = "";
     private static final String USER_REGISTERED_WELCOME_EMAIL_SUBJECT = "Welcome to Somos mas {0} !";
     private static final String WELCOME_MESSAGE_CONTENT_TYPE = "text/plain";
 
@@ -121,9 +119,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
 
     @Override
     public UserDetailsResponse getUserDetailsBy(String authorizationHeader) throws UsernameNotFoundException {
-        String jwtToken = authorizationHeader.replace(BEARER_PART, EMPTY);
-
-        String userEmail = jwtUtil.extractUserEmail(jwtToken);
+        String userEmail = jwtUtil.extractUserEmail(authorizationHeader);
         Optional<User> userEntity = userRepository.findByEmail(userEmail);
         if (userEntity.isEmpty()) {
             throw new UsernameNotFoundException(MessageFormat.format(USER_NOT_FOUND_ERROR_MESSAGE, userEmail));

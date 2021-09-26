@@ -23,6 +23,8 @@ public class JwtUtil {
     private static final String SECRET_KEY = "secret";
     private static final String BEARER_TOKEN = "Bearer %s";
     private static final String AUTHORITIES = "authorities";
+    private static final String BEARER_PART = "Bearer ";
+    private static final String EMPTY = "";
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
@@ -56,8 +58,9 @@ public class JwtUtil {
         return String.format(BEARER_TOKEN, token);
     }
 
-    public String extractUserEmail(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public String extractUserEmail(String authorizationHeader) {
+        String jwtToken = authorizationHeader.replace(BEARER_PART, EMPTY);
+        return extractClaim(jwtToken, Claims::getSubject);
     }
 
 }
