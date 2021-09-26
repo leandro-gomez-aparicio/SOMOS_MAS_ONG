@@ -49,8 +49,8 @@ public class GetNewsDetailsIntegrationTest extends BaseIntegrationTest {
                 "\"image\":\"http://s3/somosmas.jpg\"," +
                 "\"timestamp\":null,\"" +
                 "category\":" +
-                    "{\"idCategory\":1," +
-                    "\"description\":\"news\"}}";
+                "{\"idCategory\":1," +
+                "\"description\":\"news\"}}";
 
         JSONAssert.assertEquals(expected, response.getBody(), true);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());

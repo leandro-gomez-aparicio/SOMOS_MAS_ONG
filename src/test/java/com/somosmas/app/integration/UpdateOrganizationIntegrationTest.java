@@ -3,15 +3,10 @@ package com.somosmas.app.integration;
 import com.somosmas.app.config.security.RoleType;
 import com.somosmas.app.exception.ErrorInfo;
 import com.somosmas.app.model.entity.Organization;
-import com.somosmas.app.model.entity.Role;
-import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.SocialMediaRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
-import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
-import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
-import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.util.ConvertUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +17,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.MessageFormat;
@@ -31,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -40,12 +33,6 @@ public class UpdateOrganizationIntegrationTest extends BaseIntegrationTest {
 
     @MockBean
     IOrganizationRepository organizationRepository;
-
-    @MockBean
-    AuthenticationManager authenticationManager;
-
-    @MockBean
-    IUserRepository userRepository;
 
     @Test
     public void shouldUpdateOrganization() {
@@ -56,7 +43,7 @@ public class UpdateOrganizationIntegrationTest extends BaseIntegrationTest {
 
         HttpEntity<UpdateOrganizationRequest> entity = new HttpEntity<>(request, headers);
         List<String> authHeader = new ArrayList<>();
-        authHeader.add(getValidJWTToken());
+        authHeader.add(getValidJWTToken(RoleType.ROLE_ADMIN.name()));
         headers.put("Authorization", authHeader);
 
         ResponseEntity<UpdateOrganizationResponse> response = restTemplate.exchange(
@@ -77,7 +64,7 @@ public class UpdateOrganizationIntegrationTest extends BaseIntegrationTest {
 
         HttpEntity<UpdateOrganizationRequest> entity = new HttpEntity<>(request, headers);
         List<String> authHeader = new ArrayList<>();
-        authHeader.add(getValidJWTToken());
+        authHeader.add(getValidJWTToken(RoleType.ROLE_ADMIN.name()));
         headers.put("Authorization", authHeader);
 
         ResponseEntity<ErrorInfo> response = restTemplate.exchange(createURLWithPort("/organization/public"),
@@ -94,7 +81,7 @@ public class UpdateOrganizationIntegrationTest extends BaseIntegrationTest {
         request.setName(null);
         HttpEntity<UpdateOrganizationRequest> entity = new HttpEntity<>(request, headers);
         List<String> authHeader = new ArrayList<>();
-        authHeader.add(getValidJWTToken());
+        authHeader.add(getValidJWTToken(RoleType.ROLE_ADMIN.name()));
         headers.put("Authorization", authHeader);
 
         ResponseEntity<ErrorInfo> response = restTemplate.exchange(createURLWithPort("/organization/public"),
@@ -132,39 +119,4 @@ public class UpdateOrganizationIntegrationTest extends BaseIntegrationTest {
         return ConvertUtil.convertToEntity(request);
     }
 
-    private String getValidJWTToken() {
-        when(authenticationManager.authenticate(any())).thenReturn(null);
-        when(userRepository.findByEmail(eq("user@alkemy.com"))).thenReturn(stubUser());
-
-        UserDetailsRequest loginRequest = new UserDetailsRequest();
-        loginRequest.setEmail("user@alkemy.com");
-        loginRequest.setPassword("abc1234&");
-        HttpEntity<UserDetailsRequest> entity = new HttpEntity<>(loginRequest, headers);
-
-        ResponseEntity<UserDetailsResponse> response = restTemplate.exchange(createURLWithPort("/auth/login"),
-                HttpMethod.POST, entity, UserDetailsResponse.class);
-
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        return response.getBody().getToken();
-    }
-
-    private Role stubRole() {
-        Role role = new Role();
-        role.setIdRole(1L);
-        role.setName(RoleType.ROLE_ADMIN.name());
-        return role;
-    }
-
-    private Optional<User> stubUser() {
-        User user = new User();
-        user.setIdUser(1L);
-        user.setEmail("user@alkemy.com");
-        user.setPhoto("photo");
-        user.setFirstName("Bruce");
-        user.setLastName("Wayne");
-        user.setPassword("abc1234&");
-        user.setRole(stubRole());
-        return Optional.of(user);
-    }
 }

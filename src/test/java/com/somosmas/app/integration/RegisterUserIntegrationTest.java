@@ -10,7 +10,6 @@ import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
 import com.somosmas.app.repository.IRoleRepository;
-import com.somosmas.app.repository.IUserRepository;
 import com.somosmas.app.util.mail.SendEmail;
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,9 +36,6 @@ public class RegisterUserIntegrationTest extends BaseIntegrationTest {
 
     @MockBean
     IRoleRepository roleRepository;
-
-    @MockBean
-    IUserRepository userRepository;
 
     @MockBean
     IOrganizationRepository organizationRepository;
