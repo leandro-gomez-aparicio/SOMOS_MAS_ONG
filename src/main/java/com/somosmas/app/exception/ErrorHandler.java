@@ -2,6 +2,7 @@ package com.somosmas.app.exception;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
+import com.somosmas.app.exception.custom.OperationAccessDeniedException;
 import com.somosmas.app.exception.custom.ContactAlreadyExistException;
 import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import org.slf4j.Logger;
@@ -98,6 +99,13 @@ public class ErrorHandler {
         ErrorInfo errorInfo = new ErrorInfo(SDK_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI());
         LOGGER.error(exception.getMessage());
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = OperationAccessDeniedException.class)
+    public ResponseEntity<Object> OperationAccessDeniedException(HttpServletRequest request, OperationAccessDeniedException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(exception.getMessage(), HttpStatus.FORBIDDEN.value(), request.getRequestURI());
+        return new ResponseEntity<>(errorInfo, HttpStatus.UNAUTHORIZED);
     }
 
 }
