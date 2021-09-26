@@ -4,3 +4,10 @@ amazonProperties:
     secretKey: mh/aILea9unETMeiihJcUahS1opYF6PuCBeKstiO
     bucketName: alkemy-ong
     region: sa-east-1
+springfox:
+  documentation:
+    swaggerUi:
+      baseUrl: /api/docs
+    swagger:
+      v2:
+        path: /api/docs

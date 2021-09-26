@@ -41,13 +41,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers( "/auth/**",
+                .antMatchers("/auth/**",
                         "/register",
-                        "/login").permitAll()
+                        "/login",
+                        "/swagger-resources/**",
+                        "/swagger-ui/**",
+                        "/v2/api-docs",
+                        "/webjars/**",
+                        "/api/docs",
+                        "/api/docs/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/news",
                         "/activities",
-                        "/organization/public").permitAll()
+                        "/organization/public",
+                        "/api/docs").permitAll()
                 .antMatchers("/activities/**",
                         "/categories/**",
                         "/news/**",
@@ -67,6 +74,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
+    } 
 
 }
