@@ -8,5 +8,7 @@ import com.somosmas.app.repository.custom.CommentRepositoryCustom;
 
 @Repository
 public interface ICommentsRepository extends JpaRepository<Comment, Long>, CommentRepositoryCustom {
+	
+	Comment findByIdComment(Long id);
 
 }

@@ -25,18 +25,18 @@ import java.util.NoSuchElementException;
 public class CommentServiceImpl implements ICommentService {
 
     private static final String USER_ID_NOT_FOUND = "User ID: {0} not found.";
-	private static final String NEWS_ID_NOT_FOUND = "News ID: {0} not found.";
+    private static final String NEWS_ID_NOT_FOUND = "News ID: {0} not found.";
     private static final String COMMENT_ID_NOT_FOUND = "Comment ID: {0} not found.";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Autowired
-	IUserRepository userRepository;
-	
-	@Autowired
-	INewsRepository newsRepository;
-	
-	@Autowired
-	ICommentsRepository commentRepository;
+    IUserRepository userRepository;
+
+    @Autowired
+    INewsRepository newsRepository;
+
+    @Autowired
+    ICommentsRepository commentRepository;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -79,8 +79,7 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public void delete(Long id, String authorizationHeader) throws NoSuchElementException, OperationAccessDeniedException {
-        Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(COMMENT_ID_NOT_FOUND, id)));
+        Comment comment = getComment(id);
 
         User user = getRequestUser(authorizationHeader);
         if (!isAdminOrCreateCommentUser(comment, user)) {
@@ -101,4 +100,23 @@ public class CommentServiceImpl implements ICommentService {
         return ROLE_ADMIN.equals(commentUser.getRole().getName())
                 || commentUser.getEmail().equals(requestUser.getUsername());
     }
+
+    @Override
+    public CommentResponse update(CommentRequest commentRequest, Long id, String authorizationHeader) throws OperationAccessDeniedException {
+        Comment comment = getComment(id);
+
+        User user = getRequestUser(authorizationHeader);
+        if (!isAdminOrCreateCommentUser(comment, user)) {
+            throw new OperationAccessDeniedException("update comment", "User is not the owner or admin user.");
+        }
+        comment.setIdComment(id);
+        return ConvertUtil.convertToDto(commentRepository.save(comment));
+
+    }
+
+    private Comment getComment(Long id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(COMMENT_ID_NOT_FOUND, id)));
+    }
+
 }
