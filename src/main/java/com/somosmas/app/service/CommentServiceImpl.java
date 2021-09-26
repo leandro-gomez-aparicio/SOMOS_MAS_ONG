@@ -13,12 +13,6 @@ import com.somosmas.app.util.TimestampUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Root;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +33,6 @@ public class CommentServiceImpl implements ICommentService {
 	@Autowired
 	ICommentsRepository commentRepository;
         
-        @PersistenceContext
-        EntityManager entityManager;
-	
 	@Override
 	public void create(CommentRequest request) throws NoSuchElementException{
 		userRepository.findById(request.getIdUser()).orElseThrow(() ->
@@ -60,7 +51,8 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public ListCommentResponse list() {
-        List<Comment> comment = getBodyCommentsSortByOrder();
+        
+        List<Comment> comment = commentRepository.getBodyCommentsSortByOrder();
         return buildResponse(comment);
     }
 
@@ -76,20 +68,6 @@ public class CommentServiceImpl implements ICommentService {
 
         response.setComments(commentsResponses);
         return response;
-    }
-
-    // TODO: this should be in the implementation repository
-    private List<Comment> getBodyCommentsSortByOrder() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Comment> criteriaQuery = criteriaBuilder.createQuery(Comment.class);
-        Root<Comment> commentCriteria = criteriaQuery.from(Comment.class);
-
-        Order order = criteriaBuilder.desc(commentCriteria.get("timestamp"));
-
-        criteriaQuery.select(commentCriteria.get("body"))
-                .orderBy(order);
-
-        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
 }
