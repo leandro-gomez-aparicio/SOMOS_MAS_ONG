@@ -38,7 +38,18 @@ public class Activity implements Serializable {
     public Activity() {
     }
 
-    public Long getIdActivity() {
+	public Activity(Long idActivity, String name, String content, String image, Timestamp timestamp,
+			Boolean softDelete) {
+		super();
+		this.idActivity = idActivity;
+		this.name = name;
+		this.content = content;
+		this.image = image;
+		this.timestamp = timestamp;
+		this.softDelete = softDelete;
+	}
+
+	public Long getIdActivity() {
         return idActivity;
     }
 
