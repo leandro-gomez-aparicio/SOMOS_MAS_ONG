@@ -46,7 +46,7 @@ public class CommentController {
 									@RequestHeader(name = "Authorization", required = true) String authorizationHeader)
 			throws OperationAccessDeniedException {
 		CommentResponse commentResponse = commentService.update(comment, id, authorizationHeader);
-    	return new ResponseEntity<>(comment, HttpStatus.OK);
+    	return new ResponseEntity<>(commentResponse, HttpStatus.OK);
 	}
 	
 }
