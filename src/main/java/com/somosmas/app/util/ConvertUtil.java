@@ -28,6 +28,7 @@ import com.somosmas.app.model.response.OrganizationResponse;
 import com.somosmas.app.model.response.SlideDetailsResponse;
 import com.somosmas.app.model.response.SlideResponse;
 import com.somosmas.app.model.response.SocialMediaResponse;
+import com.somosmas.app.model.response.TestimonialsResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import org.modelmapper.ModelMapper;
@@ -59,7 +60,7 @@ public class ConvertUtil {
     public static Category convertToEntity(CategoryRequest request) {
         return map(request, Category.class);
     }
-    
+
     public static Member convertToEntity(MemberRequest request) {
         return map(request, Member.class);
     }
@@ -86,11 +87,11 @@ public class ConvertUtil {
     public static CategoryResponse convertToDto(Category category) {
         return map(category, CategoryResponse.class);
     }
-    
+
     public static CommentResponse convertToDto(Comment comment) {
         return map(comment, CommentResponse.class);
     }
-    
+
     public static NewsResponse convertToDto(News news) {
         return map(news, NewsResponse.class);
     }
@@ -106,7 +107,7 @@ public class ConvertUtil {
     public static Activity convertToEntity(ActivityRequest request) {
         return map(request, Activity.class);
     }
-    
+
     public static SlideResponse convertToDto(Slide slide) {
         return map(slide, SlideResponse.class);
     }
@@ -114,7 +115,7 @@ public class ConvertUtil {
     public static MemberResponse convertToDto(Member request) {
         return map(request, MemberResponse.class);
     }
-    
+
     public static List<UserDetailsResponse> convertToDto(List<User> users) {
         List<UserDetailsResponse> responses = new ArrayList<>();
         for (User user : users) {
@@ -124,30 +125,35 @@ public class ConvertUtil {
         }
         return responses;
     }
-	
-	public static News convertToEntity(NewsRequest request) {
-		return map(request,News.class);
-	}
-	
-	public static News convertToEntity(CreateNewsRequest request) {
-		return map(request,News.class);
-	}
-	
-	public static ActivityResponse convertToDto(Activity activity) {
+
+    public static News convertToEntity(NewsRequest request) {
+        return map(request, News.class);
+    }
+
+    public static News convertToEntity(CreateNewsRequest request) {
+        return map(request, News.class);
+    }
+
+    public static ActivityResponse convertToDto(Activity activity) {
         return map(activity, ActivityResponse.class);
     }
-	
-	public static Testimonials convertToEntity(TestimonialsRequest request) {
+
+    public static Testimonials convertToEntity(TestimonialsRequest request) {
         return map(request, Testimonials.class);
     }
-	public static SlideDetailsResponse convertToDtoDetails(Slide slide) {
-        return map(slide, SlideDetailsResponse.class);
-	}
-	
-    public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType){
-        return input.stream().map(i-> modelMapper.map(i,destinationType)).collect(Collectors.toList());
+
+    public static TestimonialsResponse convertToDto(Testimonials testimonials) {
+        return map(testimonials, TestimonialsResponse.class);
     }
- 
+
+    public static SlideDetailsResponse convertToDtoDetails(Slide slide) {
+        return map(slide, SlideDetailsResponse.class);
+    }
+
+    public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType) {
+        return input.stream().map(i -> modelMapper.map(i, destinationType)).collect(Collectors.toList());
+    }
+
     private static <D> D map(Object source, Class<D> destinationType) {
         if (source == null) {
             return null;

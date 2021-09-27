@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.somosmas.app.model.entity.Testimonials;
 import com.somosmas.app.model.request.TestimonialsRequest;
+import com.somosmas.app.model.response.TestimonialsResponse;
 import com.somosmas.app.repository.ITestimonialsRepository;
 import com.somosmas.app.service.abstraction.ITestimonialsService;
 import com.somosmas.app.util.ConvertUtil;
@@ -35,6 +36,21 @@ public class TestimonialsServiceImpl implements ITestimonialsService {
         testimonials.setTimestamp(TimestampUtil.getCurrentTime());
         testimonials.setSoftDelete(false);
         testimonialsRepository.save(testimonials);
+    }
+
+    @Override
+    public TestimonialsResponse update(TestimonialsRequest testimonialsRequest, Long id) {
+        Testimonials testimonials = testimonialsRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(TESTIMONIALS_ID_NOT_FOUND, id)));
+        
+        Testimonials testimonialsUpdated = ConvertUtil.convertToEntity(testimonialsRequest);
+        
+        testimonialsUpdated.setIdTestimonials(id);
+        testimonialsUpdated.setTimestamp(TimestampUtil.getCurrentTime());
+	testimonialsUpdated.setSoftDelete(testimonials.isSoftDelete());
+        testimonialsUpdated = testimonialsRepository.save(testimonialsUpdated);
+        
+        return ConvertUtil.convertToDto(testimonialsUpdated);
     }
 
 }
