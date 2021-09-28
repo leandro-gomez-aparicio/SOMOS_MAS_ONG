@@ -61,7 +61,21 @@ public class User implements Serializable, UserDetails {
 
     }
 
-    public Long getIdUser() {
+	public User(Long idUser, String firstName, String lastName, String email, String password, String photo,
+			Timestamp timestamp, Boolean softDelete, Role role) {
+		super();
+		this.idUser = idUser;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.photo = photo;
+		this.timestamp = timestamp;
+		this.softDelete = softDelete;
+		this.role = role;
+	}
+
+	public Long getIdUser() {
         return idUser;
     }
 
