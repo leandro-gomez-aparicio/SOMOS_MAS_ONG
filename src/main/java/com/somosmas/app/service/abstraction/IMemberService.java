@@ -11,4 +11,6 @@ public interface IMemberService {
 
     ListMemberResponse getMembers();
 
+    MemberResponse update(MemberRequest member, Long id);
+
 }

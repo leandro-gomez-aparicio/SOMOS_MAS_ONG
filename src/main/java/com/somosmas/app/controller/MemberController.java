@@ -38,5 +38,10 @@ public class MemberController {
 		memberService.delete(idMember);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
 	}
-	
+
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@Valid @RequestBody MemberRequest memberRequest, @PathVariable Long id){
+        MemberResponse memberResponse = memberService.update(memberRequest, id);
+        return new ResponseEntity<>(memberResponse, HttpStatus.OK);
+    }
 }

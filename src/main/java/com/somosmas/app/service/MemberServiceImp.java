@@ -67,4 +67,17 @@ public class MemberServiceImp implements IMemberService {
         return response;
     }
 
+    @Override
+    public MemberResponse update(MemberRequest memberRequest, Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(MEMBER_ID_NOT_FOUND, id)));
+
+        Member memberUpdated = ConvertUtil.convertToEntity(memberRequest);
+        memberUpdated.setIdMember(id);
+        memberUpdated.setTimestamp(TimestampUtil.getCurrentTime());
+        memberUpdated.setSoftDelete(member.getSoftDelete());
+        memberRepository.save(memberUpdated);
+
+        return ConvertUtil.convertToDto(memberUpdated);
+    }
 }
