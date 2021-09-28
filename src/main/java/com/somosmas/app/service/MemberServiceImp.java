@@ -36,10 +36,14 @@ public class MemberServiceImp implements IMemberService {
 
     @Override
     public void delete(Long idMember) throws NoSuchElementException {
-        Member member = memberRepository.findById(idMember)
-                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(MEMBER_ID_NOT_FOUND, idMember)));
+        Member member = getMember(idMember);
         member.setSoftDelete(true);
         memberRepository.save(member);
+    }
+
+    private Member getMember(Long idMember) {
+        return memberRepository.findById(idMember)
+                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(MEMBER_ID_NOT_FOUND, idMember)));
     }
 
     @Override
@@ -53,24 +57,14 @@ public class MemberServiceImp implements IMemberService {
         }
 
         List<MemberResponse> membersResponses = new ArrayList<>();
-
-        members.stream().map(member -> {
-            MemberResponse memberResponse = new MemberResponse();
-            memberResponse = ConvertUtil.convertToDto(member);
-            return memberResponse;
-        }).forEachOrdered(memberResponse -> {
-            membersResponses.add(memberResponse);
-        });
-
+        members.stream().map(ConvertUtil::convertToDto).forEachOrdered(membersResponses::add);
         response.setMembers(membersResponses);
-
         return response;
     }
 
     @Override
     public MemberResponse update(MemberRequest memberRequest, Long id) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(MEMBER_ID_NOT_FOUND, id)));
+        Member member = getMember(id);
 
         Member memberUpdated = ConvertUtil.convertToEntity(memberRequest);
         memberUpdated.setIdMember(id);
