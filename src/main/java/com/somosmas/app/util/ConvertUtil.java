@@ -12,6 +12,7 @@ import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.entity.Comment;
 import com.somosmas.app.model.request.ActivityRequest;
 import com.somosmas.app.model.request.CategoryRequest;
+import com.somosmas.app.model.request.CommentRequest;
 import com.somosmas.app.model.request.ContactRequest;
 import com.somosmas.app.model.request.CreateNewsRequest;
 import com.somosmas.app.model.request.MemberRequest;
@@ -148,6 +149,10 @@ public class ConvertUtil {
 
     public static SlideDetailsResponse convertToDtoDetails(Slide slide) {
         return map(slide, SlideDetailsResponse.class);
+    }
+
+    public static Comment convertToEntity(CommentRequest request) {
+        return map(request, Comment.class);
     }
 
     public static <O, I> List<O> convertToDto(List<I> input, Class<O> destinationType) {

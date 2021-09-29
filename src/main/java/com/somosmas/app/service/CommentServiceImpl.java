@@ -103,12 +103,12 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public CommentResponse update(CommentRequest commentRequest, Long id, String authorizationHeader) throws OperationAccessDeniedException {
-        Comment comment = getComment(id);
-
         User user = getRequestUser(authorizationHeader);
-        if (!isAdminOrCreateCommentUser(comment, user)) {
+        if (!isAdminOrCreateCommentUser(getComment(id), user)) {
             throw new OperationAccessDeniedException("update comment", "User is not the owner or admin user.");
         }
+
+        Comment comment = ConvertUtil.convertToEntity(commentRequest);
         comment.setIdComment(id);
         return ConvertUtil.convertToDto(commentRepository.save(comment));
 
