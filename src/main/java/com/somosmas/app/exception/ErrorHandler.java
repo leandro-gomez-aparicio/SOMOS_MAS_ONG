@@ -4,6 +4,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.somosmas.app.exception.custom.OperationAccessDeniedException;
 import com.somosmas.app.exception.custom.ContactAlreadyExistException;
+import com.somosmas.app.exception.custom.SlideOrderAlreadyExistsException;
 import com.somosmas.app.exception.custom.UserAlreadyExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +84,13 @@ public class ErrorHandler {
         ErrorInfo errorInfo = new ErrorInfo(IO_EXCEPTION_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI());
         LOGGER.error(exception.getMessage());
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @ExceptionHandler(value = SlideOrderAlreadyExistsException.class)
+    public ResponseEntity<Object> handleException(HttpServletRequest request, SlideOrderAlreadyExistsException exception) {
+        // return error info object with standard json
+        ErrorInfo errorInfo = new ErrorInfo(exception.getMessage(), HttpStatus.BAD_REQUEST.value(), request.getRequestURI());
+        LOGGER.error(exception.getMessage());
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = AmazonServiceException.class)

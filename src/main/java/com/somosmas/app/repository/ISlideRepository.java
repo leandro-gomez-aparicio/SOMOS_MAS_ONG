@@ -11,5 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface ISlideRepository extends JpaRepository<Slide, Long> {
     @Query(value = "SELECT case when count(slideOrder)=0 then 0 else max(slideOrder) end from Slide")
     Integer getMaxOrder();
+    boolean existsBySlideOrder(Integer slideOrder);
+
 
 }

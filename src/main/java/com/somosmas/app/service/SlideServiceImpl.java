@@ -1,5 +1,6 @@
 package com.somosmas.app.service;
 
+import com.somosmas.app.exception.custom.SlideOrderAlreadyExistsException;
 import com.somosmas.app.model.entity.Slide;
 import com.somosmas.app.model.request.CreateSlideRequest;
 import com.somosmas.app.model.response.ListSlideResponse;
@@ -61,23 +62,26 @@ public class SlideServiceImpl implements ISlideService {
 
     @Override
     public SlideResponse create(CreateSlideRequest request) throws IOException {
+
+
+        Slide slide = new Slide();
+        Integer slideOrder = request.getSlideOrder() != null ? request.getSlideOrder() : slideRepository.getMaxOrder() + 1;
+        slide.setSlideOrder(slideOrder);
+        slide.setImageUrl(uploadEncodedImage(request));
+        slide.setText(request.getDescription());
+        slide.setOrganizationId(organizationRepository.findAll().get(0).getIdOrganization());
+        slideRepository.save(slide);
+
+        return ConvertUtil.convertToDto(slide);
+    }
+    private String uploadEncodedImage(CreateSlideRequest request){
         byte[] decoded = Base64.getDecoder().decode(request.getEncodedImage());
 
         String fileName = request.getDescription().isEmpty() ? null : request.getDescription();
         String contentType = request.getContentType() == null || request.getContentType().isEmpty() ? DEFAULT_CONTENT_TYPE : request.getContentType();
 
         InputStream inputStream = new ByteArrayInputStream(decoded);
-        String url = amazonService.uploadFile(contentType, fileName, inputStream);
-
-        Slide slide = new Slide();
-        Integer slideOrder = request.getSlideOrder() != null ? request.getSlideOrder() : slideRepository.getMaxOrder() + 1;
-        slide.setSlideOrder(slideOrder);
-        slide.setImageUrl(url);
-        slide.setText(request.getDescription());
-        slide.setOrganizationId(organizationRepository.findAll().get(0).getIdOrganization());
-        slideRepository.save(slide);
-
-        return ConvertUtil.convertToDto(slide);
+        return amazonService.uploadFile(contentType, fileName, inputStream);
     }
 
     @Override
@@ -100,6 +104,19 @@ public class SlideServiceImpl implements ISlideService {
     @Override
     public SlideDetailsResponse findBy(Long id) {
 		return ConvertUtil.convertToDtoDetails(getSlide(id));
+    }
+
+    @Override
+    public SlideDetailsResponse update(CreateSlideRequest request, Long id) throws SlideOrderAlreadyExistsException {
+        Slide slide=getSlide(id);
+        if(slideRepository.existsBySlideOrder(request.getSlideOrder()))
+            throw new SlideOrderAlreadyExistsException();
+        if (request.getSlideOrder()!=null)
+            slide.setSlideOrder(request.getSlideOrder());
+        slide.setText(request.getDescription());
+        slide.setImageUrl(uploadEncodedImage(request));
+        slideRepository.save(slide);
+        return ConvertUtil.convertToDtoDetails(slide);
     }
 
 }
