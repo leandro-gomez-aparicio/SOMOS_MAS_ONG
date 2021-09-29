@@ -36,7 +36,22 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         loadActivityData();
+        loadRoles();
         loadUserData();
+    }
+
+    private void loadRoles() {
+        if (roleRepository.count() == 0) {
+            roleRepository.save(buildRole(ROLE_USER, "ROLE_USER"));
+            roleRepository.save(buildRole(ROLE_ADMIN, "ROLE_ADMIN"));
+        }
+    }
+
+    private Role buildRole(Long id, String name) {
+        Role role = new Role();
+        role.setIdRole(id);
+        role.setName(name);
+        return role;
     }
 
     private void loadActivityData() {
@@ -56,30 +71,36 @@ public class DatabaseSeeder implements CommandLineRunner {
     
 	private void loadUserData() {
 		if (userRepository.count() == 0) {
-			userRepository.save(buildUser(1L, "Yalaury", "Tobosa", "User-Yobosa@gmail.com"));
-			userRepository.save(buildUser(2L, "Lucas", "Cordoba", "User-lucascordoba77@gmail.com"));
-			userRepository.save(buildUser(3L, "Juan Ignacio", "Caballero", "user-juan.ci.caballero@gmail.com"));
-			userRepository.save(buildUser(4L, "Federico", "Aramburu", "user-fedearamburu95@gmail.com"));
-			userRepository.save(buildUser(5L, "Damian", "Bruque", "User-daamiale.recoil@gmail.com"));
-			userRepository.save(buildUser(6L, "JuanMa", "Davila", "User-juanirppr@gmail.com"));
-			userRepository.save(buildUser(7L, "Leandro", "Gomez", "User-le.rego17@gmail.com"));
-			userRepository.save(buildUser(8L, "Fernando", "Benitez", "User-benitezf.3105@gmail.com"));
-			userRepository.save(buildUser(9L, "Magali", "Kain", "User-kain.magali@gmail.com"));
-			userRepository.save(buildUser(10L, "AlkemyUser", "Generic", "AlkemyUser-Generic@gmail.com"));
-			
-//        	Users Admin
-			userRepository.save(buildUserAdmin(11L, "Yalaury", "Tobosa", "Yobosa@gmail.com"));
-			userRepository.save(buildUserAdmin(12L, "Lucas", "Cordoba", "lucascordoba77@gmail.com"));
-			userRepository.save(buildUserAdmin(13L, "Juan Ignacio", "Caballero", "juan.ci.caballero@gmail.com"));
-			userRepository.save(buildUserAdmin(14L, "Federico", "Aramburu", "fedearamburu95@gmail.com"));
-			userRepository.save(buildUserAdmin(15L, "Damian", "Bruque", "daamiale.recoil@gmail.com"));
-			userRepository.save(buildUserAdmin(16L, "JuanMa", "Davila", "juanirppr@gmail.com"));
-			userRepository.save(buildUserAdmin(17L, "Leandro", "Gomez", "le.rego17@gmail.com"));
-			userRepository.save(buildUserAdmin(18L, "Fernando", "Benite", "benitezf.3105@gmail.com"));
-			userRepository.save(buildUserAdmin(19L, "Magali", "Kain", "kain.magali@gmail.com"));
-			userRepository.save(buildUserAdmin(20L, "AlkemyAdmin", "Generics", "AlkemyAdmin-Generics@gmail.com"));
-		}
+            loadUser();
+            loadAdmin();
+        }
 	}
+
+    private void loadUser() {
+        userRepository.save(buildUser(1L, "Yalaury", "Tobosa", "User-Yobosa@gmail.com"));
+        userRepository.save(buildUser(2L, "Lucas", "Cordoba", "User-lucascordoba77@gmail.com"));
+        userRepository.save(buildUser(3L, "Juan Ignacio", "Caballero", "user-juan.ci.caballero@gmail.com"));
+        userRepository.save(buildUser(4L, "Federico", "Aramburu", "user-fedearamburu95@gmail.com"));
+        userRepository.save(buildUser(5L, "Damian", "Bruque", "User-daamiale.recoil@gmail.com"));
+        userRepository.save(buildUser(6L, "JuanMa", "Davila", "User-juanirppr@gmail.com"));
+        userRepository.save(buildUser(7L, "Leandro", "Gomez", "User-le.rego17@gmail.com"));
+        userRepository.save(buildUser(8L, "Fernando", "Benitez", "User-benitezf.3105@gmail.com"));
+        userRepository.save(buildUser(9L, "Magali", "Kain", "User-kain.magali@gmail.com"));
+        userRepository.save(buildUser(10L, "AlkemyUser", "Generic", "AlkemyUser-Generic@gmail.com"));
+    }
+
+    private void loadAdmin() {
+        userRepository.save(buildUserAdmin(11L, "Yalaury", "Tobosa", "Yobosa@gmail.com"));
+        userRepository.save(buildUserAdmin(12L, "Lucas", "Cordoba", "lucascordoba77@gmail.com"));
+        userRepository.save(buildUserAdmin(13L, "Juan Ignacio", "Caballero", "juan.ci.caballero@gmail.com"));
+        userRepository.save(buildUserAdmin(14L, "Federico", "Aramburu", "fedearamburu95@gmail.com"));
+        userRepository.save(buildUserAdmin(15L, "Damian", "Bruque", "daamiale.recoil@gmail.com"));
+        userRepository.save(buildUserAdmin(16L, "JuanMa", "Davila", "juanirppr@gmail.com"));
+        userRepository.save(buildUserAdmin(17L, "Leandro", "Gomez", "le.rego17@gmail.com"));
+        userRepository.save(buildUserAdmin(18L, "Fernando", "Benite", "benitezf.3105@gmail.com"));
+        userRepository.save(buildUserAdmin(19L, "Magali", "Kain", "kain.magali@gmail.com"));
+        userRepository.save(buildUserAdmin(20L, "AlkemyAdmin", "Generics", "AlkemyAdmin-Generics@gmail.com"));
+    }
 
     private User buildUser(long id, String firstName, String lastName, String email ) {
         return new User(id, firstName, lastName, email, bCryptPasswordEncoder.encode(PASSWORD_GENERIC), IMAGE,

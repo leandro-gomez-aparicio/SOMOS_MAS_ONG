@@ -1,15 +1,12 @@
 package com.somosmas.app.integration;
 
 
-import com.somosmas.app.config.security.RoleType;
 import com.somosmas.app.exception.custom.SendEmailException;
 import com.somosmas.app.model.entity.Organization;
-import com.somosmas.app.model.entity.Role;
 import com.somosmas.app.model.entity.User;
 import com.somosmas.app.model.request.UserDetailsRequest;
 import com.somosmas.app.model.response.UserDetailsResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
-import com.somosmas.app.repository.IRoleRepository;
 import com.somosmas.app.util.mail.SendEmail;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,16 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RegisterUserIntegrationTest extends BaseIntegrationTest {
-
-    @MockBean
-    IRoleRepository roleRepository;
 
     @MockBean
     IOrganizationRepository organizationRepository;
@@ -45,7 +38,6 @@ public class RegisterUserIntegrationTest extends BaseIntegrationTest {
 
     @Test
     public void shouldRegisterUser() throws SendEmailException {
-        when(roleRepository.findByName(eq(RoleType.ROLE_USER.name()))).thenReturn(stubRole());
         when(userRepository.save(any(User.class))).thenReturn(stubUser());
         when(organizationRepository.findAll()).thenReturn(stubOrganization());
         doNothing().when(sendEmail).execute(any());
@@ -63,13 +55,6 @@ public class RegisterUserIntegrationTest extends BaseIntegrationTest {
 
         Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
         Assert.assertEquals("paul@wayne.com", response.getBody().getEmail());
-    }
-
-    private Role stubRole() {
-        Role role = new Role();
-        role.setIdRole(1L);
-        role.setName(RoleType.ROLE_USER.name());
-        return role;
     }
 
     private User stubUser() {
