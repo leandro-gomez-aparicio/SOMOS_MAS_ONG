@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -50,6 +52,11 @@ public class NewsController {
     public ResponseEntity<?> create (@Valid @RequestBody CreateNewsRequest newRequest) throws NewsAlreadyExistException{
 		newsService.create(newRequest);
     	return new ResponseEntity<>(newRequest, HttpStatus.CREATED);
+    }
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getNews(@RequestParam("page") int page, UriComponentsBuilder uriBuilder){
+        return new ResponseEntity<>(newsService.getNews(page, uriBuilder), HttpStatus.OK);
     }
 
 }
