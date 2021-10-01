@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.somosmas.app.model.request.TestimonialsRequest;
 import com.somosmas.app.model.response.TestimonialsResponse;
 import com.somosmas.app.service.abstraction.ITestimonialsService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/testimonials")
@@ -41,6 +44,11 @@ public class TestimonialsController {
     public ResponseEntity<?> update(@Valid @RequestBody TestimonialsRequest testimonials, @PathVariable Long id){
         TestimonialsResponse testimonialsResponse = testimonialsService.update(testimonials, id);
         return new ResponseEntity<>(testimonialsResponse, HttpStatus.OK);
+    }
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getTestimonials(@RequestParam("page") int page, UriComponentsBuilder uriBuilder){
+        return new ResponseEntity<>(testimonialsService.getTestimonials(page, uriBuilder), HttpStatus.OK);
     }
 
 }
