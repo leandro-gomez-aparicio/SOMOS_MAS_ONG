@@ -4,6 +4,7 @@ import com.somosmas.app.model.entity.Organization;
 import com.somosmas.app.model.request.SocialMediaRequest;
 import com.somosmas.app.model.request.UpdateOrganizationRequest;
 import com.somosmas.app.model.response.OrganizationResponse;
+import com.somosmas.app.model.response.SlideResponse;
 import com.somosmas.app.model.response.UpdateOrganizationResponse;
 import com.somosmas.app.repository.IOrganizationRepository;
 import com.somosmas.app.service.abstraction.IOrganizationService;
@@ -24,6 +25,8 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Autowired
     private IOrganizationRepository organizationRepository;
+    @Autowired
+	private SlideServiceImpl slideService;
 
     @Override
     public OrganizationResponse getOrganizationDetails() {
@@ -32,8 +35,10 @@ public class OrganizationServiceImpl implements IOrganizationService {
         if (CollectionUtils.isEmpty(organizations)) {
             return null;
         }
-
-        return ConvertUtil.convertToDto(organizations.get(0));
+        OrganizationResponse organization = ConvertUtil.convertToDto(organizations.get(0));
+        List<SlideResponse> slides = slideService.findByOrganizationId(organizations.get(0).getIdOrganization());
+        organization.setSlides(slides);
+        return organization;
     }
 
     @Override

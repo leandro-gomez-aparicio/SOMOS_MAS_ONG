@@ -1,5 +1,7 @@
 package com.somosmas.app.model.response;
 
+import java.util.List;
+
 public class OrganizationResponse {
 
 	private String name;
@@ -7,6 +9,7 @@ public class OrganizationResponse {
 	private String address;
 	private Integer phone;
 	private SocialMediaResponse socialMedia;
+	private List<SlideResponse> slides;
 
 	public String getName() {
 		return name;
@@ -46,5 +49,13 @@ public class OrganizationResponse {
 
 	public void setSocialMedia(SocialMediaResponse socialMedia) {
 		this.socialMedia = socialMedia;
+	}
+
+	public List<SlideResponse> getSlides() {
+		return slides;
+	}
+
+	public void setSlides(List<SlideResponse> slides) {
+		this.slides = slides;
 	}
 }

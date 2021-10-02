@@ -119,4 +119,9 @@ public class SlideServiceImpl implements ISlideService {
         return ConvertUtil.convertToDtoDetails(slide);
     }
 
+    @Override
+    public List<SlideResponse> findByOrganizationId(Long organizationId){
+    	List<Slide> slides = slideRepository.findByOrganizationId(organizationId);
+    	return sortBySlideOrder(ConvertUtil.convertToDto(slides, SlideResponse.class));
+    }
 }

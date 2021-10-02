@@ -1,7 +1,10 @@
 package com.somosmas.app.integration;
 
 import com.somosmas.app.model.entity.Organization;
+import com.somosmas.app.model.entity.Slide;
 import com.somosmas.app.repository.IOrganizationRepository;
+import com.somosmas.app.repository.ISlideRepository;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -25,10 +29,14 @@ public class GetOrganizationDetailsIntegrationTest extends BaseIntegrationTest {
 
     @MockBean
     private IOrganizationRepository organizationRepository;
+    
+    @MockBean
+    ISlideRepository slideRepository;
 
     @Test
     public void shouldReturnPublicOrganizationDetails() throws Exception {
         when(organizationRepository.findAll()).thenReturn(stubOrganization());
+        when(slideRepository.findByOrganizationId(any())).thenReturn(stubSlideList());
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
@@ -42,13 +50,28 @@ public class GetOrganizationDetailsIntegrationTest extends BaseIntegrationTest {
                 "\"socialMedia\":" +
                 "{\"facebookURL\":\"http://facebook.somosmas.com\"," +
                 "\"linkedInURL\":null," +
-                "\"instagramURL\":null}}";
+                "\"instagramURL\":null}," +
+                "\"slides\":[" +
+                "{\"imageUrl\":\"www.photo.com\"," +
+                    "\"slideOrder\":1}]}";
 
         JSONAssert.assertEquals(expected, response.getBody(), true);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    private List<Organization> stubOrganization() {
+    private List<Slide> stubSlideList() {
+    	List<Slide> slideList = new ArrayList<Slide>();
+    	Slide slide = new Slide();
+    	slide.setIdSlide(1L);
+    	slide.setOrganizationId(1L);
+    	slide.setText("Slide Text");
+    	slide.setImageUrl("www.photo.com");
+    	slide.setSlideOrder(1);
+    	slideList.add(slide);
+		return slideList;
+	}
+
+	private List<Organization> stubOrganization() {
         List<Organization> organizations = new ArrayList<>();
         Organization organization = new Organization();
         organization.setIdOrganization(1L);

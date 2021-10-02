@@ -7,6 +7,7 @@ import com.somosmas.app.model.response.SlideDetailsResponse;
 import com.somosmas.app.model.response.SlideResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ISlideService {
     SlideResponse create(CreateSlideRequest request) throws IOException;
@@ -17,4 +18,6 @@ public interface ISlideService {
     SlideDetailsResponse findBy(Long id);
 
     SlideDetailsResponse update(CreateSlideRequest request, Long id) throws SlideOrderAlreadyExistsException;
+
+    public List<SlideResponse> findByOrganizationId(Long organizationId);
 }
