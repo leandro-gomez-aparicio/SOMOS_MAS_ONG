@@ -16,4 +16,6 @@ public interface ICommentService {
         void delete(Long id, String authorizationHeader) throws OperationAccessDeniedException;
         
         CommentResponse update(CommentRequest comment, Long id, String authorizationHeader) throws OperationAccessDeniedException;
+
+		ListCommentResponse getCommentsBy(Long postId);
 }

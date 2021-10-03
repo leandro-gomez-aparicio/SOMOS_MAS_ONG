@@ -54,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/news",
                         "/activities",
                         "/organization/public",
-                        "/api/docs").permitAll()
+                        "/api/docs",
+                        "/posts/{id}/comments").permitAll()
                 .antMatchers("/activities/**",
                         "/categories/**",
                         "/news/**",

@@ -40,22 +40,22 @@ public class CommentServiceImpl implements ICommentService {
 
     @Autowired
     JwtUtil jwtUtil;
-        
-	@Override
-	public void create(CommentRequest request) throws NoSuchElementException{
-		userRepository.findById(request.getIdUser()).orElseThrow(() ->
-        new NoSuchElementException(MessageFormat.format(USER_ID_NOT_FOUND, request.getIdUser())));
-		
-		newsRepository.findById(request.getIdPost()).orElseThrow(() ->
-		new NoSuchElementException(MessageFormat.format(NEWS_ID_NOT_FOUND, request.getIdPost())));
-		
-		Comment comment = new Comment();
-		comment.setUser(userRepository.getById(request.getIdUser()));
-		comment.setBody(request.getBody());
-		comment.setNews(newsRepository.getById(request.getIdPost()));
+
+    @Override
+    public void create(CommentRequest request) throws NoSuchElementException {
+        userRepository.findById(request.getIdUser()).orElseThrow(() ->
+                new NoSuchElementException(MessageFormat.format(USER_ID_NOT_FOUND, request.getIdUser())));
+
+        newsRepository.findById(request.getIdPost()).orElseThrow(() ->
+                new NoSuchElementException(MessageFormat.format(NEWS_ID_NOT_FOUND, request.getIdPost())));
+
+        Comment comment = new Comment();
+        comment.setUser(userRepository.getById(request.getIdUser()));
+        comment.setBody(request.getBody());
+        comment.setNews(newsRepository.getById(request.getIdPost()));
         comment.setTimestamp(TimestampUtil.getCurrentTime());
-		commentRepository.save(comment);
-	}
+        commentRepository.save(comment);
+    }
 
     @Override
     public ListCommentResponse list() {
@@ -117,6 +117,14 @@ public class CommentServiceImpl implements ICommentService {
     private Comment getComment(Long id) {
         return commentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(MessageFormat.format(COMMENT_ID_NOT_FOUND, id)));
+    }
+
+    @Override
+    public ListCommentResponse getCommentsBy(Long postId) {
+        List<Comment> comments = commentRepository.findBy(postId);
+        ListCommentResponse commentsResponse = new ListCommentResponse();
+        commentsResponse.setComments(ConvertUtil.convertToDto(comments, CommentResponse.class));
+        return commentsResponse;
     }
 
 }
