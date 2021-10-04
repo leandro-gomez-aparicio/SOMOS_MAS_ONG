@@ -27,7 +27,7 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequest categoryRequest) throws CategoryAlreadyExistException {
+    public ResponseEntity<?> create(@Valid @RequestBody CategoryRequest categoryRequest) throws CategoryAlreadyExistException {
         categoryService.create(categoryRequest);
         return new ResponseEntity<>(categoryRequest, HttpStatus.CREATED);
     }
@@ -49,8 +49,8 @@ public class CategoryController {
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequest category, @PathVariable Long id){
+    public ResponseEntity<?> update(@Valid @RequestBody CategoryRequest category, @PathVariable Long id){
         CategoryResponse categoryUpdated = categoryService.update(category, id);
-        return new ResponseEntity<>(categoryUpdated, HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryUpdated, HttpStatus.OK);
     }
 }
