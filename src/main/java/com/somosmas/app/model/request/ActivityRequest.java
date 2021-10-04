@@ -17,6 +17,7 @@ public class ActivityRequest {
 	@NotNull(message = "Image cannot be null.")
 	private String image;
 
+
 	public String getName() {
 		return name;
 	}

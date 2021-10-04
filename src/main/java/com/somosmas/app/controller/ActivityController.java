@@ -33,9 +33,8 @@ public class ActivityController {
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@Valid @RequestBody ActivityRequest activity, @PathVariable Long id){
+    public ResponseEntity<?> update(@Valid @RequestBody ActivityRequest activity, @PathVariable Long id) {
 		ActivityResponse activityResponse = activityService.update(activity, id);
     	return new ResponseEntity<>(activityResponse, HttpStatus.OK);
-    	
     }
 }
